@@ -64,35 +64,37 @@ char * grid = NULL;
 int rows=8;
 int cols=8;
 // making GRID
-void initial(){
-for (int i=0;i<rows ; i++)
+void initial()
 {
-    for(int j=0;j<cols ; j++)
+    for (int i=0;i<rows ; i++)
     {
-        grid[i][j]='L';
+        for(int j=0;j<cols ; j++)
+        {
+            grid[i][j]='L';
+        }
     }
-}
+}   
 const int width = 800, height = 800;
-switch(sym){
-    // BLACK IS CAPITAL YANI UPPER CASE !
-        case 'P': src = {219, 12, 38, 49}; break; // pawn
-        case 'B': src = {7, 8, 54, 53}; break;  // bishop
-        case 'K': src = {75, 7, 54, 54}; break;
-        case 'Q': src = {276, 7, 60, 56}; break; // 54
-        case 'R': src = {352, 12, 44, 49}; break;
-        case 'N': src = {143, 9, 52, 52}; break; // knight
-        // white
-        case 'p': src = {627, 12, 38, 49}; break;
-        case 'b': src = {415, 8, 54, 53}; break;
-        case 'k': src = {483, 7, 54, 54}; break;
-        case 'q': src = {684, 7, 60, 54}; break;
-        case 'r': src = {760, 12, 44, 49}; break;
-        case 'n': src = {551, 9, 52, 52}; break;
-    }
-void drawPieces(SDL_Renderer* gRenderer, SDL_Texture* assets ) // assests is texture
-{
+// switch(sym){
+//     // BLACK IS CAPITAL YANI UPPER CASE !
+//         case 'P': src = {219, 12, 38, 49}; break; // pawn
+//         case 'B': src = {7, 8, 54, 53}; break;  // bishop
+//         case 'K': src = {75, 7, 54, 54}; break;
+//         case 'Q': src = {276, 7, 60, 56}; break; // 54
+//         case 'R': src = {352, 12, 44, 49}; break;
+//         case 'N': src = {143, 9, 52, 52}; break; // knight
+//         // white
+//         case 'p': src = {627, 12, 38, 49}; break;
+//         case 'b': src = {415, 8, 54, 53}; break;
+//         case 'k': src = {483, 7, 54, 54}; break;
+//         case 'q': src = {684, 7, 60, 54}; break;
+//         case 'r': src = {760, 12, 44, 49}; break;
+//         case 'n': src = {551, 9, 52, 52}; break;
+//     }
+// void drawPieces(SDL_Renderer* gRenderer, SDL_Texture* assets ) // assests is texture
+// {
     
-}
+// }
 void drawOneBlock(SDL_Renderer* renderer, SDL_Texture* texture, int row, int col, char sym)
 {
     int xbox = width/cols;
@@ -177,5 +179,4 @@ void initial()
             }
         }
     }
-}
 }
