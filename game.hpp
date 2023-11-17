@@ -1,6 +1,6 @@
 // DO NOT CHANGE THIS FILE
 #include <SDL.h>
-#include <SDL_image.h>
+//#include <SDL_image.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -30,4 +30,10 @@ public:
     void close();
     SDL_Texture *loadTexture(std::string path);
     void run();
+};
+class DraWpieces
+{
+    public:
+    SDL_Rect srcRect, moverRect;
+
 };

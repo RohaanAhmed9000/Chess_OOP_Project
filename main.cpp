@@ -4,6 +4,7 @@
 int main(int argc, char *argv[])
 {
     Game game;
+    
     srand(time(NULL));
     if (!game.init())
     {
@@ -21,4 +22,5 @@ int main(int argc, char *argv[])
     game.close();
 
     return 0;
+    
 }

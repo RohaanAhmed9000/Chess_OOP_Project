@@ -118,7 +118,7 @@ void Game::run()
 {
 	bool quit = false;
 	SDL_Event e;
-	// initialize();
+	initial();
 
 	while (!quit)
 	{
