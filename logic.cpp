@@ -1,22 +1,58 @@
 #include <iostream>
 using namespace std;
 /*
-interaction part
+we are using namespace std
+first letter of classes capital
 */
-class Click  // where the click is and what it does
+class Pieces 
+{
+    public:
+    void virtual get()=0; // just for purely virtual functionality , dummy function
+
+    private:
+
+    protected:
+
+
+};
+
+class Pawn: public Pieces // 99% inheritence public
 {
 
 };
 
-class Messages // prompts
+class Bishop: public Pieces // 99% inheritence public
 {
 
 };
-class GameState // for running , user lost + user won
+class Knight: public Pieces // 99% inheritence public
 {
 
 };
-int main ()
+class Rook: public Pieces // 99% inheritence public
 {
-    return 0;
-}
+
+};
+class King: public Pieces // 99% inheritence public
+{
+
+};
+class Queen: public Pieces // 99% inheritence public
+{
+
+};
+
+class Interaction
+{
+    
+};
+
+class Movement // 99% inheritence public
+{
+
+};
+
+class Board
+{
+
+};
