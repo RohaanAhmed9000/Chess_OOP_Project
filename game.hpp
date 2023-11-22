@@ -1,17 +1,19 @@
 // DO NOT CHANGE THIS FILE
 #include <SDL.h>
-//#include <SDL_image.h>
+#include <SDL_image.h>
+#pragma once
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+//#include "logic.cpp"
 
 class Game
 {
     // Screen dimension constants
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 800;
+     int SCREEN_WIDTH = 800;
+     int SCREEN_HEIGHT = 800;
 
     // The window we'll be rendering to
     SDL_Window *gWindow = NULL;
@@ -23,6 +25,8 @@ class Game
     SDL_Texture *gTexture = NULL;
     // global reference to png image sheets
     SDL_Texture *assets = NULL;
+
+    SDL_Rect srcRect, movRect;
 
 public:
     bool init();
