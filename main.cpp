@@ -1,8 +1,21 @@
 // DO NOT CHANGE THIS FILE
 #include "game.hpp"
+#include <Windows.h>
 
-int main(int argc, char *argv[])
+void getMouseClickCoordinates(int& x, int& y) {
+    POINT cursorPos;
+    GetCursorPos(&cursorPos);
+    x = cursorPos.x;
+    y = cursorPos.y;
+}
+int  main(int argc, char *argv[])
 {
+    while (true) {
+        if (GetAsyncKeyState(VK_LBUTTON) & 0x8001) {
+            int x, y;
+            getMouseClickCoordinates(x, y);
+            std::cout << "Mouse clicked at: (" << x << ", " << y << ")\n";
+        }
     Game game;
     
     srand(time(NULL));
@@ -24,3 +37,6 @@ int main(int argc, char *argv[])
     return 0;
     
 }
+}
+
+

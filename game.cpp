@@ -31,6 +31,7 @@ bool Game::init()
 
 		// Create window
 		gWindow = SDL_CreateWindow("HU Mania", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		//sWindow = gWindow = SDL_CreateWindow("menu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -40,7 +41,9 @@ bool Game::init()
 		{
 			// Create renderer for window
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			if (gRenderer == NULL)
+			//sRenderer = SDL_CreateRenderer(sWindow, -2, SDL_RENDERER_ACCELERATED);
+			
+			if (gRenderer == NULL )
 			{
 				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
@@ -49,6 +52,7 @@ bool Game::init()
 			{
 				// Initialize renderer color
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				//SDL_SetRenderDrawColor(sRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 				// Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
@@ -71,7 +75,8 @@ bool Game::loadMedia()
 
 	// assets = loadTexture("assets.png");
 	gTexture = loadTexture("background.png");
-	if ( gTexture == NULL)
+	//sTexture = loadTexture ("menu.png");
+	if ( gTexture == NULL  )
 	{
 		printf("Unable to run due to error: %s\n", SDL_GetError());
 		success = false;
@@ -92,6 +97,11 @@ void Game::close()
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 	gRenderer = NULL;
+	// SDL_DestroyRenderer(sRenderer);
+	// SDL_DestroyWindow(sWindow);
+	// sWindow = NULL;
+	// sRenderer = NULL;
+
 	// Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -156,6 +166,9 @@ void Game::run()
 		// SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
         SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+
+
+		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
 		// drawBlocks(gRenderer, assets);
 
 		assets = loadTexture("spritesheet.png");
@@ -171,6 +184,7 @@ void Game::run()
 		SDL_Delay(200); // causes sdl engine to delay for specified miliseconds
 	}
 }
+
 
 
 

@@ -17,6 +17,7 @@ class Game
 
     // The window we'll be rendering to
     SDL_Window *gWindow = NULL;
+    
 
     // The window renderer
     SDL_Renderer *gRenderer = NULL;
@@ -27,6 +28,13 @@ class Game
     SDL_Texture *assets = NULL;
 
     SDL_Rect srcRect, movRect;
+
+    SDL_Window *sWindow = NULL;
+
+    SDL_Renderer *sRenderer = NULL;
+
+    // Current displayed texture
+    SDL_Texture *sTexture = NULL;
 
 public:
     bool init();
