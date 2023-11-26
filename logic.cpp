@@ -1,7 +1,9 @@
 #pragma once
 #include "pieces.hpp"
 #include "logic.hpp"
-Pawn :: Pawn(int type) {
+Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
+
+    movRect = mover;
     piece_type=type;
     if (piece_type=black_rook){
         srcRect= {219,12,38,49};
@@ -11,7 +13,7 @@ Pawn :: Pawn(int type) {
     }
 }
 
-Bishop:: Bishop(int type) {
+Bishop:: Bishop(Allpieces type) {
     
     piece_type=type;
     if (piece_type=black_rook){
@@ -22,7 +24,7 @@ Bishop:: Bishop(int type) {
     }
 }
 
-Rook :: Rook(int type) {
+Rook :: Rook(Allpieces type) {
     piece_type=type;
     if (piece_type=black_rook){
         srcRect={352,12,44,49};
@@ -33,7 +35,7 @@ Rook :: Rook(int type) {
 }
 
 
-King :: King(int type) {
+King :: King(Allpieces type) {
     
     piece_type=type;
     if (piece_type=black_king){
@@ -43,7 +45,7 @@ King :: King(int type) {
         srcRect = {483, 7, 54, 54};
     }
 }
-Queen :: Queen(int type) {
+Queen :: Queen(Allpieces type) {
     
     piece_type = type;
     if (piece_type=black_queen){
@@ -53,7 +55,7 @@ Queen :: Queen(int type) {
         srcRect = {684, 7, 50, 54};
     }
 }
-Knight :: Knight(int type) {
+Knight :: Knight(Allpieces type) {
     
     piece_type = type;
     if (piece_type=black_knight){

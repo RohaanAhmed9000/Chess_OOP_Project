@@ -1,7 +1,8 @@
 #include "game.hpp"
-//#include "logic.cpp"
-//#include <SDL.h>
-// #include "GhostBuster.hpp"
+// //#include "logic.cpp"
+// //#include <SDL.h>
+// // #include "GhostBuster.hpp"
+// #include "Board.hpp"
 
 
 char ** grid = NULL;
@@ -168,13 +169,17 @@ void Game::run()
         SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
 
 
+		myBoard.assets = loadTexture("spritesheet.png");
+		myBoard.gRenderer = gRenderer;
 		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
 		// drawBlocks(gRenderer, assets);
 
-		assets = loadTexture("spritesheet.png");
+		// assets = loadTexture("spritesheet.png");
 		
-		movRect = {100, 100, 50, 50};
-		srcRect = {7, 8, 54, 53};
+		// movRect = {100, 100, 50, 50};
+		// srcRect = {7, 8, 54, 53};
+
+		myBoard.initialize();
 
 		SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
 
