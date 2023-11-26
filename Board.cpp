@@ -24,19 +24,23 @@ void Board::initialize(){
     // myPieces.push_back(King (white_king));
     // myPieces.push_back(King (black_king));
 
-    SDL_Rect myMover = {50, 50, 50, 50};
+    SDL_Rect myMover = {50, 50, 38, 49};
     myPieces.push_back(Pawn (white_pawn, myMover));
 
-    for (int i=0; i<myPieces.size(); i++){
-        display(myPieces[i].srcRect, myPieces[i].movRect);
-    }
+    myMover = {200, 50, 50, 50};
+    myPieces.push_back(Pawn (white_pawn, myMover));
 
+    myMover = {350, 50, 50, 50};
+    myPieces.push_back(Pawn (white_pawn, myMover));
 
-    // myPieces.push_back(Pawn (white_pawn, myMover));
-    // myPieces.push_back(Pawn (white_pawn, myMover));
-    // myPieces.push_back(Pawn (white_pawn, myMover));
-    // myPieces.push_back(Pawn (white_pawn, myMover));
-    // myPieces.push_back(Pawn (white_pawn, myMover));
+    myMover = {500, 50, 50, 50};
+    myPieces.push_back(Pawn (white_pawn, myMover));
+
+    myMover = {650, 50, 50, 50};
+    myPieces.push_back(Pawn (white_pawn, myMover));
+
+    myMover = {800, 50, 50, 50};
+    myPieces.push_back(Pawn (white_pawn, myMover));
     // myPieces.push_back(Pawn (white_pawn));
     // myPieces.push_back(Pawn (white_pawn));
     
@@ -48,6 +52,10 @@ void Board::initialize(){
     // myPieces.push_back(Pawn (black_pawn));
     // myPieces.push_back(Pawn (black_pawn));
     // myPieces.push_back(Pawn (black_pawn));
+
+    for (int i=0; i<myPieces.size(); i++){
+        display(myPieces[i].srcRect, myPieces[i].movRect);
+    }
 
 }
 
