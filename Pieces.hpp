@@ -25,5 +25,9 @@ protected:
 
 public:
     SDL_Rect srcRect, movRect;
+
+private:
+    // void move(int x, int y);
+    // void select(int x, int y);    
 };
 

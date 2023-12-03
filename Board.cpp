@@ -1,19 +1,35 @@
 #include "Board.hpp"
 #include <vector>
+
+
+void Board::setCoordinates(){
+
+    for(int i=0; i<8; i++){
+
+        for (int j=0; j<8; j++){
+            blocks[i][j].x = 35+i*91;
+            blocks[i][j].y = 35+j*91;
+
+            if (i==0 || i==1 || i==6 || i==7){
+                blocks[i][j].occupy=true;
+            }
+        }
+    }
+
+    
+
+//     for(int i=0; i<8; i++){
+
+//         for (int j=0; j<8; j++){
+//             std::cout<<blocks[i][j].x<<" ";
+//             std::cout<<blocks[i][j].y<<", ";
+//         }
+//         std::cout<<endl;
+//     }
+}
+
 void Board::initialize(){
-    vector <Pieces> myPieces;
-    ;
-    
-    
-    
-
-    
-    
-    
-    
-
-
-
+        
     SDL_Rect myMover = {700, 700, 38, 49};
 
     // for black pawns
@@ -70,11 +86,6 @@ void Board::initialize(){
     myMover = {420, 50, 54, 54};
     myPieces.push_back(King (black_king, myMover));
 
-
-
-
-
-
     // for white pawns
     myMover = {60, 600, 38, 49};
     myPieces.push_back(Pawn (white_pawn, myMover));
@@ -129,33 +140,63 @@ void Board::initialize(){
     myMover = {420, 700, 54, 54};
     myPieces.push_back(King (white_king, myMover));
 
+    
 
+}
 
-
-
-    // myMover = {60, 60, 38, 49};
-    // myPieces.push_back(Rook (black_rook, myMover));
-
-    // myMover = {152, 60, 38, 49};
-    // myPieces.push_back(Knight (black_knight, myMover));
-
-
-    // myPieces.push_back(Bishop (black_pawn));
-
-
-    // myPieces.push_back(Queen (black_pawn));
-    // myPieces.push_back(King (black_pawn));
-    // myPieces.push_back(Bishop(black_pawn));
-    // myPieces.push_back(Knight (black_pawn));
-    // myPieces.push_back(Rook (black_pawn));
-
-
+void Board::draw(){
     for (int i=0; i<myPieces.size(); i++){
         display(myPieces[i].srcRect, myPieces[i].movRect);
     }
-
 }
 
 void Board::display(SDL_Rect& srcRect, SDL_Rect& movRect){
     SDL_RenderCopy(Board::gRenderer, Board::assets, &srcRect, &movRect);
 }
+
+bool Board::move(int x, int y, int I, int J, int K){
+
+    std::cout<<"Here";
+    myPieces[K].movRect.x=blocks[5][5].x+20;
+    myPieces[K].movRect.y=blocks[5][5].y+20;
+    return false,-1,-1,-1;
+
+    // for(int i=0; i<8; i++){
+    //     for (int j=0; j<8; j++){
+    //         if (blocks[i][j].x<=x && blocks[i][j].x+91>=x && blocks[i][j].y<=y && blocks[i][j].y+91>=y && blocks[i][j].occupy==false){
+    //                 for (int k=0; k<myPieces.size(); k++){
+    //                     if(not((blocks[i][j].x<=myPieces[k].movRect.x && blocks[i][j].x+91>=myPieces[k].movRect.x) || (blocks[i][j].y<=myPieces[k].movRect.y && blocks[i][j].y+91>=myPieces[k].movRect.y))){
+    //                         myPieces[K].movRect.x=blocks[i][j].x+20;
+    //                         myPieces[K].movRect.y=blocks[i][j].y+20;
+    //                         return false,-1,-1,-1;
+    //                     }
+                        
+    //                 }
+
+    //         }
+    //         }
+    //     }
+    //     return true,I,J,K;
+}
+
+
+bool Board::select(int x, int y){
+    
+    for(int i=0; i<8; i++){
+
+        for (int j=0; j<8; j++){
+            if (blocks[i][j].x<=x && blocks[i][j].x+91>=x && blocks[i][j].y<=y && blocks[i][j].y+91>=y && blocks[i][j].occupy==true){
+                    for (int k=0; k<myPieces.size(); k++){
+                        if(blocks[i][j].x<=myPieces[k].movRect.x && blocks[i][j].x+91>=myPieces[k].movRect.x && blocks[i][j].y<=myPieces[k].movRect.y && blocks[i][j].y+91>=myPieces[k].movRect.y ){
+                            std:cout<<"Yayyy";
+                            return true,i,j,k;
+                        }
+                        
+                    }
+
+            }
+            }
+        }
+        return false,-1,-1,-1;
+    }
+    
