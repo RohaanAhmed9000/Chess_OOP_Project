@@ -9,19 +9,12 @@ void Board::initialize(){
 
     
     
-    // myPieces.push_back(Knight (white_knight));
-    // myPieces.push_back(Knight (white_knight));
-    // myPieces.push_back(Knight (black_knight));
-    // myPieces.push_back(Knight (black_knight));
+    
+    
 
-    // myPieces.push_back(Queen (white_queen));
-    // myPieces.push_back(Queen (black_queen));
 
-    // myPieces.push_back(King (white_king));
-    // myPieces.push_back(King (black_king));
 
     SDL_Rect myMover = {700, 700, 38, 49};
-    // myPieces.push_back(Pawn (black_pawn, myMover));
 
     // for black pawns
     myMover = {60, 150, 38, 49};
@@ -62,6 +55,25 @@ void Board::initialize(){
     myMover = {702, 50, 44, 49};
     myPieces.push_back(Rook (black_rook, myMover));
 
+    // for black knights
+    myMover = {145, 50, 52, 52};
+    myPieces.push_back(Knight (black_knight, myMover));
+
+    myMover = {605, 50, 52, 52};
+    myPieces.push_back(Knight (black_knight, myMover));
+
+    // for black queen
+    myMover = {326, 50, 60, 56};
+    myPieces.push_back(Queen (black_queen, myMover));
+
+    // for black king
+    myMover = {420, 50, 54, 54};
+    myPieces.push_back(King (black_king, myMover));
+
+
+
+
+
 
     // for white pawns
     myMover = {60, 600, 38, 49};
@@ -101,6 +113,24 @@ void Board::initialize(){
 
     myMover = {702, 700, 44, 49};
     myPieces.push_back(Rook (white_rook, myMover));
+
+    // for white knights
+    myMover = {145, 700, 52, 52};
+    myPieces.push_back(Knight (white_knight, myMover));
+
+    myMover = {605, 700, 52, 52};
+    myPieces.push_back(Knight (white_knight, myMover));
+
+    // for white queen
+    myMover = {326, 700, 60, 54};
+    myPieces.push_back(Queen (white_queen, myMover));
+
+    // for white king
+    myMover = {420, 700, 54, 54};
+    myPieces.push_back(King (white_king, myMover));
+
+
+
 
 
     // myMover = {60, 60, 38, 49};

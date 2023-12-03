@@ -38,8 +38,8 @@ Rook :: Rook(Allpieces type, SDL_Rect mover) {
 }
 
 
-King :: King(Allpieces type) {
-    
+King :: King(Allpieces type, SDL_Rect mover) {
+    movRect = mover;
     piece_type=type;
     if (piece_type==black_king){
         srcRect={75,7,54,54};
@@ -48,18 +48,18 @@ King :: King(Allpieces type) {
         srcRect = {483, 7, 54, 54};
     }
 }
-Queen :: Queen(Allpieces type) {
-    
+Queen :: Queen(Allpieces type, SDL_Rect mover) {
+    movRect = mover;
     piece_type = type;
     if (piece_type==black_queen){
-        srcRect= {276,7,60,56};
+        srcRect= {276,7,60,54};
     }
     else if (piece_type==white_queen){
-        srcRect = {684, 7, 50, 54};
+        srcRect = {684, 7, 60, 54};
     }
 }
-Knight :: Knight(Allpieces type) {
-    
+Knight :: Knight(Allpieces type, SDL_Rect mover) {
+    movRect = mover;
     piece_type = type;
     if (piece_type==black_knight){
         srcRect= {143,9,52,52}; 

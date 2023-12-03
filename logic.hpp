@@ -25,10 +25,8 @@ class Bishop: public Pieces
 class Knight: public Pieces // 99% inheritence public
 {
     public:
-    Knight(Allpieces type);
+    Knight(Allpieces type, SDL_Rect mover);
 };
-
-
 
 class Rook: public Pieces // 99% inheritence public
 {
@@ -39,13 +37,13 @@ class Rook: public Pieces // 99% inheritence public
 class King: public Pieces // 99% inheritence public
 {
     public:
-    King(Allpieces type);
+    King(Allpieces type, SDL_Rect mover);
 };
 
 class Queen: public Pieces // 99% inheritence public
 {
     public:
-    Queen(Allpieces type);
+    Queen(Allpieces type, SDL_Rect mover);
 };
 
 // class Interaction
