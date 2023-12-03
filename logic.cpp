@@ -1,35 +1,38 @@
 #pragma once
-#include "pieces.hpp"
 #include "logic.hpp"
+
 Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 
     movRect = mover;
     piece_type=type;
-    if (piece_type=black_rook){
+
+    if (type==black_pawn){
         srcRect= {219,12,38,49};
     }
-    else if (piece_type=white_king){
+    else if (type==white_pawn){
         srcRect = {627, 12, 38, 49};
     }
 }
 
-Bishop:: Bishop(Allpieces type) {
-    
+Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
+    movRect = mover; 
     piece_type=type;
-    if (piece_type=black_rook){
+    if (piece_type==black_bishop){
         srcRect={7,8,54,53};
     }
-    else if (piece_type=white_king){
+    else if (piece_type==white_bishop){
         srcRect = {415, 8, 54, 53};
     }
 }
 
-Rook :: Rook(Allpieces type) {
+Rook :: Rook(Allpieces type, SDL_Rect mover) {
+    movRect = mover;
     piece_type=type;
-    if (piece_type=black_rook){
+
+    if (piece_type==black_rook){
         srcRect={352,12,44,49};
     }
-    else if (piece_type=white_king){
+    else if (piece_type==white_rook){
         srcRect = {760, 12, 44, 49};
     }
 }
@@ -38,7 +41,7 @@ Rook :: Rook(Allpieces type) {
 King :: King(Allpieces type) {
     
     piece_type=type;
-    if (piece_type=black_king){
+    if (piece_type==black_king){
         srcRect={75,7,54,54};
     }
     else if (piece_type=white_king){
@@ -48,20 +51,20 @@ King :: King(Allpieces type) {
 Queen :: Queen(Allpieces type) {
     
     piece_type = type;
-    if (piece_type=black_queen){
+    if (piece_type==black_queen){
         srcRect= {276,7,60,56};
     }
-    else if (piece_type=white_queen){
+    else if (piece_type==white_queen){
         srcRect = {684, 7, 50, 54};
     }
 }
 Knight :: Knight(Allpieces type) {
     
     piece_type = type;
-    if (piece_type=black_knight){
+    if (piece_type==black_knight){
         srcRect= {143,9,52,52}; 
     }
-    else if (piece_type=white_knight){
+    else if (piece_type==white_knight){
         srcRect = {551, 9, 52, 52};
     }
     

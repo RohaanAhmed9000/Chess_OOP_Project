@@ -18,18 +18,22 @@ class Pawn: public Pieces
 class Bishop: public Pieces 
 {
     public:
-    Bishop(Allpieces type);
+    Bishop(Allpieces type, SDL_Rect mover);
 };
+
+
 class Knight: public Pieces // 99% inheritence public
 {
     public:
     Knight(Allpieces type);
 };
 
+
+
 class Rook: public Pieces // 99% inheritence public
 {
     public: 
-    Rook(Allpieces type);
+    Rook(Allpieces type, SDL_Rect mover);
 };
 
 class King: public Pieces // 99% inheritence public
