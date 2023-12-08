@@ -20,10 +20,9 @@ enum Allpieces {
 
 class Pieces 
 {
-protected:
-    Allpieces piece_type;
 
 public:
+    Allpieces piece_type;
     SDL_Rect srcRect, movRect;
 
 private:

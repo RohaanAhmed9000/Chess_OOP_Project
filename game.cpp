@@ -158,7 +158,7 @@ void Game::run()
 				// int xMouse=1000, yMouse=1000;
 				SDL_GetMouseState(&xMouse, &yMouse);
 
-				std::cout<<xMouse<<" "<<yMouse<<endl;
+				// std::cout<<xMouse<<" "<<yMouse<<endl;
 				// if (e.button.button == SDL_BUTTON_LEFT)
 				// 	huntGhost(xMouse, yMouse);
 				// else
@@ -173,9 +173,9 @@ void Game::run()
 		static int count=0;
 
 		// to check whether a piece is selected
-		static bool slct= false;
+		bool slct= false;
 
-		static int I=-1,J=-1,K=-1;
+		int I=-1,J=-1,K=-1;
 		
     	if (count==0){
 			myBoard.assets = loadTexture("spritesheet.png");
@@ -186,11 +186,10 @@ void Game::run()
 		}
 
 		slct,I,J,K=myBoard.select(xMouse,yMouse);
-		if (slct==true){
+		if (slct){
+			std::cout<<I<<", "<<J<<endl;
 			slct,I,J,K=myBoard.move(xMouse,yMouse,I,J,K);
-			
 		}
-		
 		
         myBoard.draw();
 

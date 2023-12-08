@@ -7,17 +7,18 @@
 
 struct position{
     int x, y;
-    bool occupy;
+    bool occupy=false;
 };
 
 class Board{
-
     position blocks[8][8];
 
     public :
     vector <Pieces> myPieces;
     SDL_Renderer* gRenderer;
     //global reference to png image sheets
+
+    int a1_x, a1_y = 35;
 
     SDL_Texture* assets;
 
