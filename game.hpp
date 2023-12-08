@@ -33,21 +33,22 @@ class Game
 
     SDL_Rect srcRect, movRect;
 
-    SDL_Window *sWindow = NULL;
+    // SDL_Window *sWindow = NULL;
 
-    SDL_Renderer *sRenderer = NULL;
+    // SDL_Renderer *sRenderer = NULL;
 
     // Current displayed texture
-    SDL_Texture *sTexture = NULL;
+    // SDL_Texture *sTexture = NULL;
 
 public:
     Board myBoard;
-
     bool init();
-    bool loadMedia();
+    bool loadMedia(string path);
     void close();
+    int obj;
     SDL_Texture *loadTexture(std::string path);
     void run();
+    void transition(int x, int y);
 };
 
 // class DraWpieces

@@ -10,7 +10,7 @@ int rows=8;
 int cols=8;
 const int width = 800, height = 800;
 void initial();
-
+void transition(int x, int y);
 bool Game::init()
 {
 	// Initialization flag
@@ -32,8 +32,8 @@ bool Game::init()
 
 		// Create window
 		gWindow = SDL_CreateWindow("HU Mania", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		//sWindow = gWindow = SDL_CreateWindow("menu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
+		//mWindow = gWindow = SDL_CreateWindow("menu", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (gWindow == NULL )
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;
@@ -42,9 +42,9 @@ bool Game::init()
 		{
 			// Create renderer for window
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			//sRenderer = SDL_CreateRenderer(sWindow, -2, SDL_RENDERER_ACCELERATED);
+			//mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
 			
-			if (gRenderer == NULL )
+			if (gRenderer == NULL  )
 			{
 				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				success = false;
@@ -53,7 +53,7 @@ bool Game::init()
 			{
 				// Initialize renderer color
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				//SDL_SetRenderDrawColor(sRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				//SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 				// Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
@@ -69,14 +69,14 @@ bool Game::init()
 	return success;
 }
 
-bool Game::loadMedia()
+bool Game::loadMedia(string path="menu.png")
 {
 	// Loading success flag
 	bool success = true;
 
 	// assets = loadTexture("assets.png");
-	gTexture = loadTexture("background.png");
-	//sTexture = loadTexture ("menu.png");
+	gTexture = loadTexture(path);
+	//mTexture = loadTexture ("menu.png");
 	if ( gTexture == NULL  )
 	{
 		printf("Unable to run due to error: %s\n", SDL_GetError());
@@ -89,17 +89,11 @@ void Game::close()
 {
 	// quitGhostBuster();
 	// Free loaded images
-	// SDL_DestroyTexture(assets);
-	assets = NULL;
-	//SDL_DestroyTexture(gTexture);
-
-	// Destroy window
+	SDL_DestroyTexture(assets);
+	SDL_DestroyTexture(gTexture);
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
-	gRenderer = NULL;
-	// SDL_DestroyRenderer(sRenderer);
-	// SDL_DestroyWindow(sWindow);
+	SDL_DestroyWindow(gWindow);
 	// sWindow = NULL;
 	// sRenderer = NULL;
 
@@ -123,6 +117,7 @@ SDL_Texture *Game::loadTexture(std::string path)
 	{
 		// Create texture from surface pixels
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		//newTexture2 = SDL_CreateTextureFromSurface(mRenderer, loadedSurface);
 		if (newTexture == NULL)
 		{
 			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -143,7 +138,6 @@ void Game::run()
 	while (!quit)
 	{
 		// Handle events on queue
-		int xMouse=1000, yMouse=1000;
 		while (SDL_PollEvent(&e) != 0)
 		{
 			// User requests quit
@@ -155,44 +149,35 @@ void Game::run()
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
 				// this is a good location to add pigeon in linked list.
-				// int xMouse=1000, yMouse=1000;
+				int xMouse, yMouse;
+				
 				SDL_GetMouseState(&xMouse, &yMouse);
-
-				std::cout<<xMouse<<" "<<yMouse<<endl;
-				// if (e.button.button == SDL_BUTTON_LEFT)
-				// 	huntGhost(xMouse, yMouse);
-				// else
-				// 	bustGhost(xMouse, yMouse);
-			}
+				cout << "X is  " << xMouse << ", ";
+				cout << "Y is " <<yMouse << endl;
+				transition(xMouse,yMouse);
 		}
 
-		SDL_RenderClear(gRenderer); // removes everything from renderer
-		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+		SDL_RenderClear(gRenderer);
+		//SDL_RenderClear(mRenderer);
+		
+		 // removes everything from renderer
+		// SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
-    
-		static int count=0;
+        SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+		//SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
 
-		// to check whether a piece is selected
-		static bool slct= false;
 
-		static int I=-1,J=-1,K=-1;
-		
-    	if (count==0){
-			myBoard.assets = loadTexture("spritesheet.png");
-			myBoard.gRenderer = gRenderer;
-			myBoard.initialize();
-			myBoard.setCoordinates();
-			count++;
-		}
+		myBoard.assets = loadTexture("spritesheet.png");
+		myBoard.gRenderer = gRenderer;
+		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
+		// drawBlocks(gRenderer, assets);
 
-		slct,I,J,K=myBoard.select(xMouse,yMouse);
-		if (slct==true){
-			slct,I,J,K=myBoard.move(xMouse,yMouse,I,J,K);
-			
-		}
+		// assets = loadTexture("spritesheet.png");
 		
-		
-        myBoard.draw();
+		// movRect = {100, 100, 50, 50};
+		// srcRect = {7, 8, 54, 53};
+
+		myBoard.initialize();
 
 		SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
 
@@ -200,96 +185,33 @@ void Game::run()
 		SDL_RenderPresent(gRenderer); // displays the updated renderer
 
 		SDL_Delay(200); // causes sdl engine to delay for specified miliseconds
+		}
 	}
 }
 
 
 
+void Game::transition(int x, int y)
+{
+	bool flag=false;
 
+	// cout << "obj is " << obj;
+	if ((x>=154 && x<=346) && (y>=331 && y<=365)) // for start
+	{
+		// code for main screen
+		loadMedia("background.png");
 
-
-// void initial()
-// {
-//     for (int i=0; i<rows ; i++ )
-//     {
-//         for (int j=0; j< cols ; j++)
-//         {
-//             if (i==1 || i==0)
-//             {
-//                 if(i==1){
-//                     grid[i][j]='P';
-//                 }
-//                 else{
-//                     switch(j)
-//                     {
-//                         case 0:grid[i][j]='R'; break;
-//                         case 1:grid[i][j]='N'; break;
-//                         case 2:grid[i][j]='B'; break;
-//                         case 3:grid[i][j]='Q'; break;
-//                         case 4:grid[i][j]='K'; break;
-//                         case 5:grid[i][j]='B'; break;
-//                         case 6:grid[i][j]='N'; break;
-//                         case 7:grid[i][j]='R'; break;
-//                     }
-                
-//                 }
-//             }
-//             else if(i==6 || i==7)
-//             {
-//                 if(i==6){
-//                     grid[i][j]='p';
-//                 }
-//                 else{
-//                     switch(j){
-//                         case 0:grid[i][j]='r'; break;
-//                         case 1:grid[i][j]='n'; break;
-//                         case 2:grid[i][j]='b'; break;
-//                         case 3:grid[i][j]='q'; break;
-//                         case 4:grid[i][j]='k'; break;
-//                         case 5:grid[i][j]='b'; break;
-//                         case 6:grid[i][j]='n'; break;
-//                         case 7:grid[i][j]='r'; break;
-//                     }    
-//                 }
-//             }
-//         }
-//     }
-// }
-
-// void drawOneBlock(SDL_Renderer* renderer, SDL_Texture* texture, int row, int col, char sym)
-// {
-//     int xbox = 800/cols;
-//     int ybox = 800/rows;
-//     SDL_Rect src;
-//     switch(sym){
-//     // BLACK IS CAPITAL YANI UPPER CASE !
-//         case 'P': src = {219, 12, 38, 49}; break; // pawn
-//         case 'B': src = {7, 8, 54, 53}; break;  // bishop
-//         case 'K': src = {75, 7, 54, 54}; break;
-//         case 'Q': src = {276, 7, 60, 56}; break; // 54
-//         case 'R': src = {352, 12, 44, 49}; break;
-//         case 'N': src = {143, 9, 52, 52}; break; // knight
-//         // white
-//         case 'p': src = {627, 12, 38, 49}; break;
-//         case 'b': src = {415, 8, 54, 53}; break;
-//         case 'k': src = {483, 7, 54, 54}; break;
-//         case 'q': src = {684, 7, 60, 54}; break;
-//         case 'r': src = {760, 12, 44, 49}; break;
-//         case 'n': src = {551, 9, 52, 52}; break;
-//     }
-//     SDL_Rect mov = { xbox*col, ybox*row, xbox - 10, ybox - 10};
-//     SDL_RenderCopy(renderer, texture, &src, &mov);
-
-// }
-
-// void drawBlocks(SDL_Renderer* renderer, SDL_Texture* texture){
-//     // Call drawOneBlock for all of the blocks of grid
-//     // for example to draw a snake over block (3, 5) you call it this way:
-//     // drawOneBlock(renderer, texture, 3, 5, 'S');
-//     if(grid == NULL) return;
-//     for(int i=0;i<rows; i++){
-//         for(int j=0;j<cols; j++){
-//             drawOneBlock(renderer, texture, i, j, grid[i][j]);
-//         }   
-//     }
-// }
+	}
+	else if ((x>=466 && x<=658) && (y>=331 && y<=366))
+	{
+		// code for exit
+		//std::cout<<'close';
+		close(); // this gives errors
+	}
+	else if ((x>=340 && x<=360) && (y>=700 && y<=800))
+	{
+		//loadMedia("White Wins.png"); // working
+		loadMedia("Black Wins.png");
+	}
+	
+}

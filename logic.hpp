@@ -18,32 +18,30 @@ class Pawn: public Pieces
 class Bishop: public Pieces 
 {
     public:
-    Bishop(Allpieces type, SDL_Rect mover);
+    Bishop(Allpieces type);
 };
-
-
 class Knight: public Pieces // 99% inheritence public
 {
     public:
-    Knight(Allpieces type, SDL_Rect mover);
+    Knight(Allpieces type);
 };
 
 class Rook: public Pieces // 99% inheritence public
 {
     public: 
-    Rook(Allpieces type, SDL_Rect mover);
+    Rook(Allpieces type);
 };
 
 class King: public Pieces // 99% inheritence public
 {
     public:
-    King(Allpieces type, SDL_Rect mover);
+    King(Allpieces type);
 };
 
 class Queen: public Pieces // 99% inheritence public
 {
     public:
-    Queen(Allpieces type, SDL_Rect mover);
+    Queen(Allpieces type);
 };
 
 // class Interaction
