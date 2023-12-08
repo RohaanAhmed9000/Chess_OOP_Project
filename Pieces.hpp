@@ -1,5 +1,7 @@
 #pragma once
-#include "game.hpp"
+#include <SDL.h>
+#include <SDL_image.h>
+
 
 enum Allpieces {
     black_rook,
@@ -13,8 +15,8 @@ enum Allpieces {
     white_king,
     white_queen,
     white_pawn,
-    white_knight;
-}
+    white_knight
+};
 
 class Pieces 
 {
@@ -22,7 +24,10 @@ protected:
     Allpieces piece_type;
 
 public:
-    SDL_Rect srcRect, moverRect;
-    void display(); 
+    SDL_Rect srcRect, movRect;
+
+private:
+    // void move(int x, int y);
+    // void select(int x, int y);    
 };
 

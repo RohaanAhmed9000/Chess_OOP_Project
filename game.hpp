@@ -1,13 +1,17 @@
 // DO NOT CHANGE THIS FILE
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#pragma once
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 #include <time.h>
-//#include "logic.cpp"
+#include "Pieces.hpp"
+#include "logic.hpp"
+#include "Board.hpp"
+
 
 class Game
 {
@@ -37,15 +41,18 @@ class Game
     SDL_Texture *sTexture = NULL;
 
 public:
+    Board myBoard;
+
     bool init();
     bool loadMedia();
     void close();
     SDL_Texture *loadTexture(std::string path);
     void run();
 };
-class DraWpieces
-{
-    public:
-    SDL_Rect srcRect, moverRect;
 
-};
+// class DraWpieces
+// {
+//     public:
+//     SDL_Rect srcRect, moverRect;
+
+// };
