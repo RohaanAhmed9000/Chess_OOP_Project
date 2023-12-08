@@ -3,6 +3,10 @@
 // //#include <SDL.h>
 // // #include "GhostBuster.hpp"
 // #include "Board.hpp"
+#include <SDL_mixer.h>
+
+//Mix_Chunk* backgroundmusic = NULL;
+
 
 
 char ** grid = NULL;
@@ -90,6 +94,7 @@ void Game::close()
 	// quitGhostBuster();
 	// Free loaded images
 	SDL_DestroyTexture(assets);
+	SDL_DestroyTexture(myBoard.assets);
 	SDL_DestroyTexture(gTexture);
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
@@ -152,8 +157,8 @@ void Game::run()
 				int xMouse, yMouse;
 				
 				SDL_GetMouseState(&xMouse, &yMouse);
-				cout << "X is  " << xMouse << ", ";
-				cout << "Y is " <<yMouse << endl;
+				// cout << "X is  " << xMouse << ", ";
+				// cout << "Y is " <<yMouse << endl;
 				transition(xMouse,yMouse);
 		}
 
@@ -167,12 +172,12 @@ void Game::run()
 		//SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
 
 
-		myBoard.assets = loadTexture("spritesheet.png");
+		// myBoard.assets = loadTexture("spritesheet.png");
 		myBoard.gRenderer = gRenderer;
 		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
 		// drawBlocks(gRenderer, assets);
 
-		// assets = loadTexture("spritesheet.png");
+		assets = loadTexture("spritesheet.png");
 		
 		// movRect = {100, 100, 50, 50};
 		// srcRect = {7, 8, 54, 53};
@@ -187,9 +192,8 @@ void Game::run()
 		SDL_Delay(200); // causes sdl engine to delay for specified miliseconds
 		}
 	}
+
 }
-
-
 
 void Game::transition(int x, int y)
 {
@@ -200,6 +204,9 @@ void Game::transition(int x, int y)
 	{
 		// code for main screen
 		loadMedia("background.png");
+		// string music;
+		// music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
+		// backgroundmusic = Mix_LoadWAV(music);
 
 	}
 	else if ((x>=466 && x<=658) && (y>=331 && y<=366))
@@ -211,7 +218,7 @@ void Game::transition(int x, int y)
 	else if ((x>=340 && x<=360) && (y>=700 && y<=800))
 	{
 		//loadMedia("White Wins.png"); // working
-		loadMedia("Black Wins.png");
+		loadMedia("Black Wins.png"); // working
 	}
 	
 }
