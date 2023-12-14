@@ -8,13 +8,7 @@ void Board::setCoordinates(){
         for (int j=0; j<8; j++){
             blocks[i][j].x = 35+i*91;
             blocks[i][j].y = 35+j*91;
-
-            // std::cout<<"("<<blocks[i][j].x<<" "<<blocks[i][j].y<<") ";
-            if (i==0 || i==1 || i==6 || i==7){
-                blocks[i][j].occupy=true;
-            }
         }
-        // std::cout<<endl;
     }
 }
 
@@ -199,7 +193,6 @@ bool Board::select(int x, int y){
 
     
     // for(int i=0; i<8; i++){
-
     //     for (int j=0; j<8; j++){
     //         if (blocks[i][j].x<=x && blocks[i][j].x+91>=x && blocks[i][j].y<=y && blocks[i][j].y+91>=y && blocks[i][j].occupy==true){
     //                 for (int k=0; k<myPieces.size(); k++){
