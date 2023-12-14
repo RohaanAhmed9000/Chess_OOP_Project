@@ -155,7 +155,7 @@ void Game::run()
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
 				// this is a good location to add pigeon in linked list.
-				// int xMouse=1000, yMouse=1000;
+				int xMouse=1000, yMouse=1000;
 				SDL_GetMouseState(&xMouse, &yMouse);
 
 				// std::cout<<xMouse<<" "<<yMouse<<endl;
@@ -170,7 +170,7 @@ void Game::run()
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
     
-		static int count=0;
+		int count=0;
 
 		// to check whether a piece is selected
 		bool slct= false;
@@ -185,11 +185,29 @@ void Game::run()
 			count++;
 		}
 
-		slct,I,J,K=myBoard.select(xMouse,yMouse);
-		if (slct){
-			std::cout<<I<<", "<<J<<endl;
-			slct,I,J,K=myBoard.move(xMouse,yMouse,I,J,K);
+		int cur_rank, cur_file = 0;
+		// static int click = 0;
+		std::cout<<xMouse<<" "<<yMouse<<endl;
+		if ((xMouse>=35 and xMouse<=762) and (yMouse>=35 and yMouse<=762)){
+			// cur_rank, cur_file = myBoard.select(xMouse,yMouse);
+			// Pieces* cur_piece = myBoard.blocks[cur_rank][cur_file].piece;
+			// click = 1;
+			// std::cout<<cur_rank<<" "<<cur_file<<endl;s
 		}
+// 
+		// if (click==1){
+		myBoard.move(xMouse, yMouse, cur_rank, cur_file);
+			// count = 0;
+		// }
+
+		// else {
+		// 	count = 0;
+		// }
+		// slct,I,J,K=myBoard.select(xMouse,yMouse);
+		// if (slct){
+		// 	std::cout<<I<<", "<<J<<endl;
+		// 	slct,I,J,K=myBoard.move(xMouse,yMouse,I,J,K);
+		// }
 		
         myBoard.draw();
 

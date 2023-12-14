@@ -7,13 +7,14 @@
 
 struct position{
     int x, y;
-    bool occupy=false;
+    //bool occupy=false;
+    Pieces* piece = nullptr;
 };
 
 class Board{
+    public :
     position blocks[8][8];
 
-    public :
     vector <Pieces> myPieces;
     SDL_Renderer* gRenderer;
     //global reference to png image sheets
@@ -30,9 +31,9 @@ class Board{
 
     void display(SDL_Rect& srcRect, SDL_Rect& movRect);
 
-    bool move(int x, int y, int I, int J, int K);
+    void move(int x, int y, int srank, int file);
 
-    bool select(int x, int y);
+    int select(int x, int y);
 
 };
 
