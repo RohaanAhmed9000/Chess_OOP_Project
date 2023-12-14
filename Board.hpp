@@ -11,6 +11,7 @@ struct position{
     Pieces* piece = nullptr;
 };
 
+
 class Board{
     public :
     position blocks[8][8];

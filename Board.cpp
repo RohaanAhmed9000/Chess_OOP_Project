@@ -14,8 +14,14 @@ void Board::move(int x, int y, int prev_rank, int prev_file){
     int file = (x-35)/91; 
 
     // blocks[rank][file].piece = blocks[prev_rank][prev_file].piece;
-    blocks[prev_rank][prev_file].piece = nullptr;
+    if (rank<8 and file<8){ 
+        // delete blocks[prev_rank][prev_file].piece;
+        std::cout<<rank<<" "<<file<<endl;
+        SDL_Rect myMover = {700, 700, 38, 49};
+        myMover = {60, 150, 38, 49};
+        blocks[rank][file].piece=new Pawn (black_pawn, myMover);
 
+    }
 }
 
 

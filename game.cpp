@@ -155,7 +155,7 @@ void Game::run()
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
 				// this is a good location to add pigeon in linked list.
-				int xMouse=1000, yMouse=1000;
+				// int xMouse=1000, yMouse=1000;
 				SDL_GetMouseState(&xMouse, &yMouse);
 
 				// std::cout<<xMouse<<" "<<yMouse<<endl;
@@ -192,7 +192,7 @@ void Game::run()
 			// cur_rank, cur_file = myBoard.select(xMouse,yMouse);
 			// Pieces* cur_piece = myBoard.blocks[cur_rank][cur_file].piece;
 			// click = 1;
-			// std::cout<<cur_rank<<" "<<cur_file<<endl;s
+			// std::cout<<cur_rank<<" "<<cur_file<<endl;
 		}
 // 
 		// if (click==1){
