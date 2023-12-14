@@ -4,6 +4,7 @@
 // // #include "GhostBuster.hpp"
 // #include "Board.hpp"
 #include <SDL_mixer.h>
+#include <string>
 
 //Mix_Chunk* backgroundmusic = NULL;
 
@@ -136,89 +137,262 @@ SDL_Texture *Game::loadTexture(std::string path)
 }
 void Game::run()
 {
-	bool quit = false;
-	SDL_Event e;
-	// initial();
+	cout << "Running started" << endl;
+    if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+        cout << "Handing initialzing error" << endl;
+        return;
+    }
 
-	while (!quit)
-	{
-		// Handle events on queue
-		while (SDL_PollEvent(&e) != 0)
-		{
-			// User requests quit
-			if (e.type == SDL_QUIT)
-			{
-				quit = true;
-			}
+    // Load sound file
+    SDL_AudioSpec wavSpec;
+    Uint32 wavLength;
+    Uint8* wavBuffer;
 
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				// this is a good location to add pigeon in linked list.
-				int xMouse, yMouse;
-				
-				SDL_GetMouseState(&xMouse, &yMouse);
-				// cout << "X is  " << xMouse << ", ";
-				// cout << "Y is " <<yMouse << endl;
-				transition(xMouse,yMouse);
-		}
+    // Use forward slashes in the file path
+    if (SDL_LoadWAV("E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u/board.wav", &wavSpec, &wavBuffer, &wavLength) == nullptr) {
+        cout << "loading error: " << SDL_GetError() << endl;
+        SDL_Quit();
+        return;
+    }
 
-		SDL_RenderClear(gRenderer);
-		//SDL_RenderClear(mRenderer);
-		
-		 // removes everything from renderer
-		// SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
-		//***********************draw the objects here********************
-        SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-		//SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
+    // Open audio device
+    SDL_AudioDeviceID audioDevice;
+    if (SDL_OpenAudioDevice(nullptr, 0, &wavSpec, nullptr, 0) < 0) {
+        cout << "Audio error: " << SDL_GetError() << endl;
+        SDL_FreeWAV(wavBuffer);
+        SDL_Quit();
+        return;
+    }
 
+    // Play the sound
+    SDL_QueueAudio(audioDevice, wavBuffer, wavLength);
+    SDL_PauseAudioDevice(audioDevice, 0);  // Unpause audio
 
-		// myBoard.assets = loadTexture("spritesheet.png");
-		myBoard.gRenderer = gRenderer;
-		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
-		// drawBlocks(gRenderer, assets);
+    // Wait for the sound to finish playing (optional)
+    while (SDL_GetQueuedAudioSize(audioDevice) > 0) {
+        SDL_Delay(100);
+    }
 
-		assets = loadTexture("spritesheet.png");
-		
-		// movRect = {100, 100, 50, 50};
-		// srcRect = {7, 8, 54, 53};
+    // Clean up
+    SDL_CloseAudioDevice(audioDevice);
+    SDL_FreeWAV(wavBuffer);
+    // SDL_Quit();
 
-		myBoard.initialize();
+    string path = "menu.png";
+    string music;
+    music = "E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u/board.mp3";
+    // Mix_PlayMusic(music, -1);
+    // game.close();
+    bool quit = false;
+    SDL_Event e;
+    // initial();
 
-		SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
+    while (!quit) {
+        // Handle events on queue
+        while (SDL_PollEvent(&e) != 0) {
+            // User requests quit
+            if (e.type == SDL_QUIT) {
+                quit = true;
+            }
 
-		//****************************************************************
-		SDL_RenderPresent(gRenderer); // displays the updated renderer
+            if (e.type == SDL_MOUSEBUTTONDOWN) {
+                // this is a good location to add pigeon in linked list.
+                int xMouse, yMouse;
 
-		SDL_Delay(200); // causes sdl engine to delay for specified miliseconds
-		}
-	}
+                SDL_GetMouseState(&xMouse, &yMouse);
+                // cout << "X is  " << xMouse << ", ";
+                // cout << "Y is " <<yMouse << endl;
+                transition(xMouse, yMouse);
+            }
 
+            SDL_RenderClear(gRenderer);
+            // SDL_RenderClear(mRenderer);
+
+            // removes everything from renderer
+            // SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+            //***********************draw the objects here********************
+            SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+            // SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
+
+            // myBoard.assets = loadTexture("spritesheet.png");
+            myBoard.gRenderer = gRenderer;
+            // SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
+            // drawBlocks(gRenderer, assets);
+
+            assets = loadTexture("spritesheet.png");
+
+            // movRect = {100, 100, 50, 50};
+            // srcRect = {7, 8, 54, 53};
+
+            myBoard.initialize();
+
+            SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
+
+            //****************************************************************
+            SDL_RenderPresent(gRenderer);  // displays the updated renderer
+
+            SDL_Delay(200);  // causes sdl engine to delay for specified miliseconds
+        }
+    }
 }
 
 void Game::transition(int x, int y)
 {
-	bool flag=false;
+    bool flag = false;
 
-	// cout << "obj is " << obj;
-	if ((x>=154 && x<=346) && (y>=331 && y<=365)) // for start
-	{
-		// code for main screen
-		loadMedia("background.png");
-		// string music;
-		// music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
-		// backgroundmusic = Mix_LoadWAV(music);
+    // cout << "obj is " << obj;
+    if ((x >= 154 && x <= 346) && (y >= 331 && y <= 365))  // for start
+    {
+        // code for main screen
+        loadMedia("background.png");
+        // string music;
+        // music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
+        // backgroundmusic = Mix_LoadWAV(music);
+    }
+    else if ((x >= 466 && x <= 658) && (y >= 331 && y <= 366)) {
+        // code for exit
+        // std::cout<<'close';
+        close();  // this gives errors
+    }
+    else if ((x >= 340 && x <= 360) && (y >= 700 && y <= 800)) {
+        // loadMedia("White Wins.png"); // working
+        loadMedia("Black Wins.png");  // working
+    }
+// 	cout<< "Running started" << endl;
+// 	 if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+//         // Handle initialization error
+// 		cout << "Handing initialzing error" << endl;
+//         //return;
+//     }
 
-	}
-	else if ((x>=466 && x<=658) && (y>=331 && y<=366))
-	{
-		// code for exit
-		//std::cout<<'close';
-		close(); // this gives errors
-	}
-	else if ((x>=340 && x<=360) && (y>=700 && y<=800))
-	{
-		//loadMedia("White Wins.png"); // working
-		loadMedia("Black Wins.png"); // working
-	}
+//     // Load sound file
+//     SDL_AudioSpec wavSpec;
+//     Uint32 wavLength;
+//     Uint8* wavBuffer;
+
+//     if (SDL_LoadWAV("E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u\board.wav", &wavSpec, &wavBuffer, &wavLength) == nullptr) {
+//         // Handle loading error
+// 		cout << "loading error" << endl;
+//         //SDL_Quit();
+//         //return;
+//     }
+
+//     // Open audio devic/
+//     SDL_AudioDeviceID audioDevice;
+//     if (SDL_OpenAudioDevice(nullptr, 0, &wavSpec, nullptr, 0) < 0) {
+//         // Handle audio device error
+// 		cout << "Audio error" << endl;
+//         SDL_FreeWAV(wavBuffer);
+		
+//         //SDL_Quit();
+//         //return;
+//     }
+
+//     // Play the sound
+//     SDL_QueueAudio(audioDevice, wavBuffer, wavLength);
+//     SDL_PauseAudioDevice(audioDevice, 0);  // Unpause audio
+
+//     // Wait for the sound to finish playing (optional)
+//     while (SDL_GetQueuedAudioSize(audioDevice) > 0) {
+//         SDL_Delay(100);
+//     }
+
+//     // Clean up
+//     SDL_CloseAudioDevice(audioDevice);
+//     SDL_FreeWAV(wavBuffer);
+//     //SDL_Quit();
+
+//     //return 0;
+//     string path="menu.png";
+//     string music;
+// 	music = "E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u\board.mp3";
+//     //Mix_PlayMusic(music, -1);
+//     //game.close();
+// 	bool quit = false;
+// 	SDL_Event e;
+// 	// initial();
+
+// 	while (!quit)
+// 	{
+// 		// Handle events on queue
+// 		while (SDL_PollEvent(&e) != 0)
+// 		{
+// 			// User requests quit
+// 			if (e.type == SDL_QUIT)
+// 			{
+// 				quit = true;
+// 			}
+
+// 			if (e.type == SDL_MOUSEBUTTONDOWN)
+// 			{
+// 				// this is a good location to add pigeon in linked list.
+// 				int xMouse, yMouse;
+				
+// 				SDL_GetMouseState(&xMouse, &yMouse);
+// 				// cout << "X is  " << xMouse << ", ";
+// 				// cout << "Y is " <<yMouse << endl;
+// 				transition(xMouse,yMouse);
+// 		}
+
+// 		SDL_RenderClear(gRenderer);
+// 		//SDL_RenderClear(mRenderer);
+		
+// 		 // removes everything from renderer
+// 		// SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+// 		//***********************draw the objects here********************
+//         SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+// 		//SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
+
+
+// 		// myBoard.assets = loadTexture("spritesheet.png");
+// 		myBoard.gRenderer = gRenderer;
+// 		// SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
+// 		// drawBlocks(gRenderer, assets);
+
+// 		assets = loadTexture("spritesheet.png");
+		
+// 		// movRect = {100, 100, 50, 50};
+// 		// srcRect = {7, 8, 54, 53};
+
+// 		myBoard.initialize();
+
+// 		SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
+
+// 		//****************************************************************
+// 		SDL_RenderPresent(gRenderer); // displays the updated renderer
+
+// 		SDL_Delay(200); // causes sdl engine to delay for specified miliseconds
+// 		}
+// 	}
+
+// }
+
+// void Game::transition(int x, int y)
+// {
+// 	bool flag=false;
+
+// 	// cout << "obj is " << obj;
+// 	if ((x>=154 && x<=346) && (y>=331 && y<=365)) // for start
+// 	{
+// 		// code for main screen
+// 		loadMedia("background.png");
+// 		// string music;
+// 		// music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
+// 		// backgroundmusic = Mix_LoadWAV(music);
+
+// 	}
+// 	else if ((x>=466 && x<=658) && (y>=331 && y<=366))
+// 	{
+// 		// code for exit
+// 		//std::cout<<'close';
+// 		close(); // this gives errors
+// 	}
+// 	else if ((x>=340 && x<=360) && (y>=700 && y<=800))
+// 	{
+// 		//loadMedia("White Wins.png"); // working
+// 		loadMedia("Black Wins.png"); // working
+// 	} // working but not functioning 
+
+
 	
 }

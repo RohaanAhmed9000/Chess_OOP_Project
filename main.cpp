@@ -2,6 +2,7 @@
 #include "game.hpp"
 #include <Windows.h>
 #include <string>
+#include <SDL.h>
 
 void getMouseClickCoordinates(int& x, int& y) {
     POINT cursorPos;
@@ -11,9 +12,7 @@ void getMouseClickCoordinates(int& x, int& y) {
 }
 int  main(int argc, char *argv[])
 {
-    string path="menu.png";
-    string music;
-	music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
+   
     while (true) {
         // if (GetAsyncKeyState(VK_LBUTTON) & 0x8001) {
         //     int x, y;
@@ -21,6 +20,7 @@ int  main(int argc, char *argv[])
         //     std::cout << "Mouse clicked at: (" << x << ", " << y << ")\n";
         // }
     Game game;
+    string path;
     
     srand(time(NULL));
     if (!game.init()) // IDK WHAT TO DO IDK WHAT TO DO
@@ -37,7 +37,7 @@ int  main(int argc, char *argv[])
         return 0;
     }
     // Load media
-    if (!game.loadMedia(path))
+    if (!game.loadMedia(path="menu.png"))
     {
         printf("Failed to load media!\n");
         return 0;
@@ -50,11 +50,12 @@ int  main(int argc, char *argv[])
     //Mix_FreeMusic(music);
     //Mix_CloseAudio();
     game.run();
-    //Mix_PlayMusic(music, -1);
-    game.close();
+    // Initialize SDL
+   
 
     return 0;
     
+
 }
 }
 
