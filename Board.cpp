@@ -1,27 +1,33 @@
 #include "Board.hpp"
 #include <vector>
 
-int Board::select(int x, int y){
+position& Board::select(int x, int y){
 
     int file = (x-35)/91; 
     int rank = (y-35)/91;
-    
-    return rank, file;
+    std::cout<<rank<<" "<<file<<endl;
+
+    return blocks[rank][file];
 }
 
-void Board::move(int x, int y, int prev_rank, int prev_file){
-    int rank = (y-35)/91;
-    int file = (x-35)/91; 
+void Board::move(int x, int y, int prev_x, int prev_y){
+    int rank = (x-35)/91;
+    int file = (x-35)/91;
 
-    // blocks[rank][file].piece = blocks[prev_rank][prev_file].piece;
-    if (rank<8 and file<8){ 
-        // delete blocks[prev_rank][prev_file].piece;
-        std::cout<<rank<<" "<<file<<endl;
-        SDL_Rect myMover = {700, 700, 38, 49};
-        myMover = {60, 150, 38, 49};
-        blocks[rank][file].piece=new Pawn (black_pawn, myMover);
+    int prev_rank = (prev_x-35)/91;
+    int prev_file = (prev_y-35)/91; 
 
-    }
+    
+    // std::cout<<rank<<" "<<file<<endl;
+    SDL_Rect myMover = {700, 700, 38, 49};
+    myMover = {x, y, 38, 49};
+    blocks[rank][file].piece = blocks[prev_rank][prev_file].piece;
+    blocks[rank][file].piece->movRect = myMover;
+    blocks[prev_rank][prev_file].piece=nullptr;
+
+    //draw();
+
+    // }
 }
 
 

@@ -144,6 +144,9 @@ void Game::run()
 	{
 		// Handle events on queue
 		int xMouse=1000, yMouse=1000;
+		position cur_pos;
+		static int click = 0;
+
 		while (SDL_PollEvent(&e) != 0)
 		{
 			// User requests quit
@@ -157,12 +160,21 @@ void Game::run()
 				// this is a good location to add pigeon in linked list.
 				// int xMouse=1000, yMouse=1000;
 				SDL_GetMouseState(&xMouse, &yMouse);
+				if (click==1){
+					myBoard.move(xMouse, yMouse, cur_pos.x, cur_pos.y);
+					click=0;
+				}
 
+				if (xMouse<800 and yMouse<800 and click==0){
+					cur_pos = myBoard.select(xMouse,yMouse);
+					if (cur_pos.piece){
+						std::cout<<"piece selected\n";
+						click=1;
+					}
+				}
+
+				
 				// std::cout<<xMouse<<" "<<yMouse<<endl;
-				// if (e.button.button == SDL_BUTTON_LEFT)
-				// 	huntGhost(xMouse, yMouse);
-				// else
-				// 	bustGhost(xMouse, yMouse);
 			}
 		}
 
@@ -170,12 +182,12 @@ void Game::run()
 		SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
 		//***********************draw the objects here********************
     
-		int count=0;
+		static int count=0;
 
 		// to check whether a piece is selected
-		bool slct= false;
+		// bool slct= false;
 
-		int I=-1,J=-1,K=-1;
+		// int I=-1,J=-1,K=-1;
 		
     	if (count==0){
 			myBoard.assets = loadTexture("spritesheet.png");
@@ -186,28 +198,14 @@ void Game::run()
 		}
 
 		int cur_rank, cur_file = 0;
-		// static int click = 0;
-		std::cout<<xMouse<<" "<<yMouse<<endl;
+
+		// std::cout<<xMouse<<" "<<yMouse<<endl;
 		if ((xMouse>=35 and xMouse<=762) and (yMouse>=35 and yMouse<=762)){
-			// cur_rank, cur_file = myBoard.select(xMouse,yMouse);
+			// 
 			// Pieces* cur_piece = myBoard.blocks[cur_rank][cur_file].piece;
 			// click = 1;
 			// std::cout<<cur_rank<<" "<<cur_file<<endl;
 		}
-// 
-		// if (click==1){
-		myBoard.move(xMouse, yMouse, cur_rank, cur_file);
-			// count = 0;
-		// }
-
-		// else {
-		// 	count = 0;
-		// }
-		// slct,I,J,K=myBoard.select(xMouse,yMouse);
-		// if (slct){
-		// 	std::cout<<I<<", "<<J<<endl;
-		// 	slct,I,J,K=myBoard.move(xMouse,yMouse,I,J,K);
-		// }
 		
         myBoard.draw();
 

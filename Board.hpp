@@ -34,7 +34,7 @@ class Board{
 
     void move(int x, int y, int srank, int file);
 
-    int select(int x, int y);
+    position& select(int x, int y);
 
 };
 
