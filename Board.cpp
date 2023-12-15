@@ -16,7 +16,7 @@ void Board::move(int x, int y, int prev_x, int prev_y){
 
     int prev_file = (prev_x-35)/91;
     int prev_rank = (prev_y-35)/91; 
-    std::cout<<cur_file<<" "<<cur_rank<<endl;
+    // std::cout<<cur_file<<" "<<cur_rank<<endl;
 
     if(blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank, prev_file, prev_rank)){
         blocks[cur_rank][cur_file].piece=blocks[prev_rank][prev_file].piece;

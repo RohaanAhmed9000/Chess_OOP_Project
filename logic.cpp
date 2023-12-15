@@ -2,25 +2,32 @@
 #include "logic.hpp"
 
 bool Pawn::move(int file, int rank, int prev_file, int prev_rank){
-    // std::cout<<"previous position: "<<prev_rank<<", "<<prev_file<<endl;
-    // std::cout<<"new position: "<<rank<<", "<<file<<endl;
-
     bool moved=false;    
 
-    int rank_diff = abs(prev_rank-rank);
-    std::cout<<rank_diff;
+    int rank_diff = (prev_rank-rank);
+    std::cout<<rank_diff<<endl;
 
-    if(rank_diff==1 or (rank_diff==2 and first_move)){ //and file==prev_file){
-        Pieces::move(file, rank, prev_file, prev_rank);
-        movRect.x+=off_centre_x;
-        movRect.y+=off_centre_y;
-        moved=true;
-        first_move=false;
+    if (piece_type==black_pawn){
+        if(rank_diff==-1 or (rank_diff==-2 and first_move)){ //and file==prev_file){
+            Pieces::move(file, rank, prev_file, prev_rank);
+            movRect.x+=off_centre_x;
+            movRect.y+=off_centre_y;
+            moved=true;
+            first_move=false;
+        }
+    }
+    else if (piece_type==white_pawn){
+        if(rank_diff==1 or (rank_diff==2 and first_move)){ //and file==prev_file){
+            Pieces::move(file, rank, prev_file, prev_rank);
+            movRect.x+=off_centre_x;
+            movRect.y+=off_centre_y;
+            moved=true;
+            first_move=false;
+        }
     }
     return moved;
     
 }
-
 Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 
     movRect = mover;
@@ -28,26 +35,31 @@ Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
     off_centre_x = 24;
     off_centre_y = 27;
 
-    if (type==black_pawn){
+    if (piece_type==black_pawn){
         srcRect= {219,12,38,49};
     }
-    else if (type==white_pawn){
+    else if (piece_type==white_pawn){
         srcRect = {627, 12, 38, 49};
     }
 }
 
 
-bool Bishop::move(int rank, int file, int prev_file, int prev_rank){
-    //std::cout<<rank<<file<<"hre";
-    movRect.x = (rank*91+35)+21;
-    movRect.y = (file*91+35)+19;
+
+bool Bishop::move(int file, int rank, int prev_file, int prev_rank){
+
+
+    movRect.x = (file*91+35)+off_centre_x;
+    movRect.y = (rank*91+35)+off_centre_y;
     return true;
 }
-
 
 Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
     movRect = mover; 
     piece_type=type;
+
+    off_centre_x = 21;
+    off_centre_y = 19;
+
     if (piece_type==black_bishop){
         srcRect={7,8,54,53};
     }
@@ -59,9 +71,10 @@ Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
 
 bool Rook::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
-
-    movRect.x = (rank*91+35)+25;
-    movRect.y = (file*91+35)+24;
+    int rank_diff = abs(prev_rank-rank);
+    int file_diff = abs(prev_file-file);
+    movRect.x = (rank*91+35)+off_centre_x;
+    movRect.y = (file*91+35)+off_centre_y;
     return true;
 }
 
