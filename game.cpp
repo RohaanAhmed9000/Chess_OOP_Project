@@ -177,7 +177,7 @@ void Game::run()
 					//std::cout<<"sahi jai bhai";
 
 					cur_pos = &(myBoard.select(xMouse,yMouse));
-					// std::cout<<cur_pos->x<<" "<<cur_pos->y<<endl;
+					// std::cout<<cur_poss->x<<" "<<cur_pos->y<<endl;
 					if (cur_pos->piece){
 						// std::cout<<"piece selected\n";
 						click=1;

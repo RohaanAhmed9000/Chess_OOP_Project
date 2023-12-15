@@ -1,14 +1,23 @@
 #pragma once
 #include "logic.hpp"
 
-void Pawn::move(int rank, int file, int prev_file, int prev_rank){
-    //std::cout<<rank<<file<<"hre";
+bool Pawn::move(int file, int rank, int prev_file, int prev_rank){
+    // std::cout<<"previous position: "<<prev_rank<<", "<<prev_file<<endl;
+    // std::cout<<"new position: "<<rank<<", "<<file<<endl;
+
+    bool moved=false;    
+
     int rank_diff = abs(prev_rank-rank);
     std::cout<<rank_diff;
-    if(rank_diff==1){ //and file==prev_file){
-        movRect.x = (rank*91+35)+24;
-        movRect.y = (file*91+35)+27;
+
+    if(rank_diff==1 or (rank_diff==2 and first_move)){ //and file==prev_file){
+        Pieces::move(file, rank, prev_file, prev_rank);
+        movRect.x+=off_centre_x;
+        movRect.y+=off_centre_y;
+        moved=true;
+        first_move=false;
     }
+    return moved;
     
 }
 
@@ -16,6 +25,8 @@ Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 
     movRect = mover;
     piece_type=type;
+    off_centre_x = 24;
+    off_centre_y = 27;
 
     if (type==black_pawn){
         srcRect= {219,12,38,49};
@@ -26,10 +37,11 @@ Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 }
 
 
-void Bishop::move(int rank, int file, int prev_file, int prev_rank){
+bool Bishop::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
     movRect.x = (rank*91+35)+21;
     movRect.y = (file*91+35)+19;
+    return true;
 }
 
 
@@ -45,11 +57,12 @@ Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
 }
 
 
-void Rook::move(int rank, int file, int prev_file, int prev_rank){
+bool Rook::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
     movRect.x = (rank*91+35)+25;
     movRect.y = (file*91+35)+24;
+    return true;
 }
 
 Rook :: Rook(Allpieces type, SDL_Rect mover) {
@@ -65,11 +78,13 @@ Rook :: Rook(Allpieces type, SDL_Rect mover) {
 }
 
 
-void King::move(int rank, int file, int prev_file, int prev_rank){
+bool King::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
     movRect.x = (rank*91+35)+21;
     movRect.y = (file*91+35)+15;
+    return true;
+
 }
 
 
@@ -85,11 +100,12 @@ King :: King(Allpieces type, SDL_Rect mover) {
 }
 
 
-void Queen::move(int rank, int file, int prev_file, int prev_rank){
+bool Queen::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
     movRect.x = (rank*91+35)+15;
     movRect.y = (file*91+35)+18;
+    return true;
 }
 
 Queen :: Queen(Allpieces type, SDL_Rect mover) {
@@ -104,11 +120,12 @@ Queen :: Queen(Allpieces type, SDL_Rect mover) {
 }
 
 
-void Knight::move(int rank, int file, int prev_file, int prev_rank){
+bool Knight::move(int rank, int file, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
     movRect.x = (rank*91+35)+19;
     movRect.y = (file*91+35)+21;
+    return true;
 }
 
 Knight :: Knight(Allpieces type, SDL_Rect mover) {
