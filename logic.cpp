@@ -46,11 +46,18 @@ Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 
 
 bool Bishop::move(int file, int rank, int prev_file, int prev_rank){
+    
+    int rank_diff = abs(prev_rank-rank);
+    int file_diff = abs(prev_file-file);
+    bool moved = false;
 
-
-    movRect.x = (file*91+35)+off_centre_x;
-    movRect.y = (rank*91+35)+off_centre_y;
-    return true;
+    if (rank_diff==file_diff){
+        movRect.x = (file*91+35)+off_centre_x;
+        movRect.y = (rank*91+35)+off_centre_y;
+        moved = true;
+    }
+    
+    return moved;
 }
 
 Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
@@ -69,13 +76,20 @@ Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
 }
 
 
-bool Rook::move(int rank, int file, int prev_file, int prev_rank){
+bool Rook::move(int file, int rank, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
     int rank_diff = abs(prev_rank-rank);
     int file_diff = abs(prev_file-file);
-    movRect.x = (rank*91+35)+off_centre_x;
-    movRect.y = (file*91+35)+off_centre_y;
-    return true;
+    bool moved = false ;
+
+    if (rank_diff==0 or file_diff==0){
+        movRect.x = (file*91+35)+16;
+        movRect.y = (rank*91+35)+18;
+        moved = true;
+    }
+    
+    return moved;
+    
 }
 
 Rook :: Rook(Allpieces type, SDL_Rect mover) {
