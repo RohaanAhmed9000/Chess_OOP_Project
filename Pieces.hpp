@@ -25,7 +25,7 @@ public:
     Allpieces piece_type;
     SDL_Rect srcRect, movRect;
 
-    void move(int rank, int file);
+    void virtual move(int rank, int file);
 
 private:
     // void move(int x, int y);

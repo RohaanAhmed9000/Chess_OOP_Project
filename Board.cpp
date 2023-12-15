@@ -11,23 +11,17 @@ position& Board::select(int x, int y){
 }
 
 void Board::move(int x, int y, int prev_x, int prev_y){
-    int rank = (x-35)/91;
+
     int file = (x-35)/91;
+    int rank = (y-35)/91; // changed X to y here, hehe
 
     int prev_rank = (prev_x-35)/91;
     int prev_file = (prev_y-35)/91; 
 
-    
-    // std::cout<<rank<<" "<<file<<endl;
-    SDL_Rect myMover = {700, 700, 38, 49};
-    myMover = {x, y, 38, 49};
-    blocks[rank][file].piece = blocks[prev_rank][prev_file].piece;
-    blocks[rank][file].piece->movRect = myMover;
+    blocks[prev_rank][prev_file].piece->move(file,rank);
+    blocks[rank][file].piece=blocks[prev_rank][prev_file].piece;
     blocks[prev_rank][prev_file].piece=nullptr;
-
-    //draw();
-
-    // }
+ 
 }
 
 
@@ -43,8 +37,7 @@ void Board::setCoordinates(){
 void Board::initialize(){
         
     SDL_Rect myMover = {700, 700, 38, 49};
-
-    // for black pawns
+// for black pawns
     myMover = {60, 150, 38, 49};
     // myPieces.push_back(Pawn (black_pawn, myMover));
     blocks[1][0].piece = new Pawn (black_pawn, myMover);
@@ -184,13 +177,13 @@ void Board::initialize(){
     // for white queen
     myMover = {326, 700, 60, 54};
     // myPieces.push_back(Queen (white_queen, myMover));
-    blocks[7][3].piece = new Rook (white_rook, myMover);
+    blocks[7][3].piece = new Queen (white_queen, myMover);
 
 
     // for white king
     myMover = {420, 700, 54, 54};
     // myPieces.push_back(King (white_king, myMover));
-    blocks[7][4].piece = new Rook (white_rook, myMover);
+    blocks[7][4].piece = new King (white_king, myMover);
 }
 
 

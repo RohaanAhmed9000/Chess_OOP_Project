@@ -13,12 +13,16 @@ class Pawn: public Pieces
 {
     public:
     Pawn(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 class Bishop: public Pieces 
 {
     public:
     Bishop(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 
@@ -26,24 +30,32 @@ class Knight: public Pieces // 99% inheritence public
 {
     public:
     Knight(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 class Rook: public Pieces // 99% inheritence public
 {
     public: 
     Rook(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 class King: public Pieces // 99% inheritence public
 {
     public:
     King(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 class Queen: public Pieces // 99% inheritence public
 {
     public:
     Queen(Allpieces type, SDL_Rect mover);
+
+    void move(int rank, int file) override;
 };
 
 // class Interaction

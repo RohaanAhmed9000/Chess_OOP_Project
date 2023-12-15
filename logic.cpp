@@ -1,6 +1,13 @@
 #pragma once
 #include "logic.hpp"
 
+void Pawn::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+27;
+    movRect.y = (file*91+35)+24;
+}
+
 Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 
     movRect = mover;
@@ -14,6 +21,14 @@ Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
     }
 }
 
+
+void Bishop::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+21;
+    movRect.y = (file*91+35)+19;
+}
+
 Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
     movRect = mover; 
     piece_type=type;
@@ -23,6 +38,14 @@ Bishop:: Bishop(Allpieces type, SDL_Rect mover) {
     else if (piece_type==white_bishop){
         srcRect = {415, 8, 54, 53};
     }
+}
+
+
+void Rook::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+25;
+    movRect.y = (file*91+35)+24;
 }
 
 Rook :: Rook(Allpieces type, SDL_Rect mover) {
@@ -38,6 +61,14 @@ Rook :: Rook(Allpieces type, SDL_Rect mover) {
 }
 
 
+void King::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+21;
+    movRect.y = (file*91+35)+15;
+}
+
+
 King :: King(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type=type;
@@ -48,6 +79,15 @@ King :: King(Allpieces type, SDL_Rect mover) {
         srcRect = {483, 7, 54, 54};
     }
 }
+
+
+void Queen::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+15;
+    movRect.y = (file*91+35)+18;
+}
+
 Queen :: Queen(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type = type;
@@ -58,6 +98,15 @@ Queen :: Queen(Allpieces type, SDL_Rect mover) {
         srcRect = {684, 7, 60, 54};
     }
 }
+
+
+void Knight::move(int rank, int file){
+    //std::cout<<rank<<file<<"hre";
+
+    movRect.x = (rank*91+35)+19;
+    movRect.y = (file*91+35)+21;
+}
+
 Knight :: Knight(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type = type;

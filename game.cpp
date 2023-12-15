@@ -140,11 +140,12 @@ void Game::run()
 	SDL_Event e;
 	// initial();
 
+	//int click=0;
 	while (!quit)
 	{
 		// Handle events on queue
 		int xMouse=1000, yMouse=1000;
-		position cur_pos;
+		position* cur_pos;
 		static int click = 0;
 
 		while (SDL_PollEvent(&e) != 0)
@@ -159,15 +160,23 @@ void Game::run()
 			{
 				// this is a good location to add pigeon in linked list.
 				// int xMouse=1000, yMouse=1000;
+				//std::cout<<xMouse<<yMouse;
 				SDL_GetMouseState(&xMouse, &yMouse);
+				//std::cout<<xMouse<<yMouse;
 				if (click==1){
-					myBoard.move(xMouse, yMouse, cur_pos.x, cur_pos.y);
+					myBoard.move(xMouse, yMouse, cur_pos->x, cur_pos->y);
+					cur_pos=NULL;
 					click=0;
+					std::cout<<"value of click: "<<cur_pos<<std::endl;
+					// took me more than an hour to debug this, I literally tried everything!!, we can also change the order of the IF conditions
+					break;
 				}
 
-				if (xMouse<800 and yMouse<800 and click==0){
-					cur_pos = myBoard.select(xMouse,yMouse);
-					if (cur_pos.piece){
+				// changed the condition and the operator for OR and AND	
+				if (!(xMouse>760 || yMouse>760 || xMouse<35 || yMouse<35) && click==0){
+					//std::cout<<"sahi jai bhai";
+					cur_pos = &(myBoard.select(xMouse,yMouse));
+					if (cur_pos->piece){
 						std::cout<<"piece selected\n";
 						click=1;
 					}
@@ -197,15 +206,15 @@ void Game::run()
 			count++;
 		}
 
-		int cur_rank, cur_file = 0;
+		//static int cur_rank, cur_file = 0;
 
 		// std::cout<<xMouse<<" "<<yMouse<<endl;
-		if ((xMouse>=35 and xMouse<=762) and (yMouse>=35 and yMouse<=762)){
+		//if ((xMouse>=35 and xMouse<=762) and (yMouse>=35 and yMouse<=762)){
 			// 
 			// Pieces* cur_piece = myBoard.blocks[cur_rank][cur_file].piece;
 			// click = 1;
 			// std::cout<<cur_rank<<" "<<cur_file<<endl;
-		}
+		//}
 		
         myBoard.draw();
 
