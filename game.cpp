@@ -165,9 +165,9 @@ void Game::run()
 				//std::cout<<xMouse<<yMouse;
 				if (click==1){
 					myBoard.move(xMouse, yMouse, cur_pos->x, cur_pos->y);
-					cur_pos=NULL;
+					cur_pos=nullptr;
 					click=0;
-					std::cout<<"value of click: "<<cur_pos<<std::endl;
+					// std::cout<<"value of click: "<<cur_pos<<std::endl;
 					// took me more than an hour to debug this, I literally tried everything!!, we can also change the order of the IF conditions
 					break;
 				}
@@ -175,9 +175,11 @@ void Game::run()
 				// changed the condition and the operator for OR and AND	
 				if (!(xMouse>760 || yMouse>760 || xMouse<35 || yMouse<35) && click==0){
 					//std::cout<<"sahi jai bhai";
+
 					cur_pos = &(myBoard.select(xMouse,yMouse));
+					// std::cout<<cur_pos->x<<" "<<cur_pos->y<<endl;
 					if (cur_pos->piece){
-						std::cout<<"piece selected\n";
+						// std::cout<<"piece selected\n";
 						click=1;
 					}
 				}

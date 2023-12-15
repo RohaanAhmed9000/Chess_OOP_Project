@@ -5,21 +5,21 @@ position& Board::select(int x, int y){
 
     int file = (x-35)/91; 
     int rank = (y-35)/91;
-    std::cout<<rank<<" "<<file<<endl;
-
+    // std::cout<<rank<<" "<<file<<endl;
     return blocks[rank][file];
 }
 
 void Board::move(int x, int y, int prev_x, int prev_y){
 
-    int file = (x-35)/91;
-    int rank = (y-35)/91; // changed X to y here, hehe
+    int cur_file = (x-35)/91;
+    int cur_rank = (y-35)/91; // changed X to y here, hehe
 
-    int prev_rank = (prev_x-35)/91;
-    int prev_file = (prev_y-35)/91; 
+    int prev_file = (prev_x-35)/91;
+    int prev_rank = (prev_y-35)/91; 
+    // std::cout<<cur_file<<" "<<cur_rank<<endl;
 
-    blocks[prev_rank][prev_file].piece->move(file,rank);
-    blocks[rank][file].piece=blocks[prev_rank][prev_file].piece;
+    blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank, prev_file, prev_rank);
+    blocks[cur_rank][cur_file].piece=blocks[prev_rank][prev_file].piece;
     blocks[prev_rank][prev_file].piece=nullptr;
  
 }
@@ -28,8 +28,8 @@ void Board::move(int x, int y, int prev_x, int prev_y){
 void Board::setCoordinates(){
     for (int i=0; i<8; i++){
         for (int j=0; j<8; j++){
-            blocks[i][j].x = 35+i*91;
-            blocks[i][j].y = 35+j*91;
+            blocks[i][j].x = 35+j*91;
+            blocks[i][j].y = 35+i*91;
         }
     }
 }
