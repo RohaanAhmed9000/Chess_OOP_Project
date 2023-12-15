@@ -83,18 +83,20 @@ bool Rook::move(int file, int rank, int prev_file, int prev_rank){
     bool moved = false ;
 
     if (rank_diff==0 or file_diff==0){
-        movRect.x = (file*91+35)+16;
-        movRect.y = (rank*91+35)+18;
+        movRect.x = (file*91+35)+off_centre_x;
+        movRect.y = (rank*91+35)+off_centre_y;
         moved = true;
     }
     
     return moved;
-    
+
 }
 
 Rook :: Rook(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type=type;
+    off_centre_x = 24;
+    off_centre_y = 27;
 
     if (piece_type==black_rook){
         srcRect={352,12,44,49};
@@ -105,12 +107,21 @@ Rook :: Rook(Allpieces type, SDL_Rect mover) {
 }
 
 
-bool King::move(int rank, int file, int prev_file, int prev_rank){
+
+bool King::move(int file, int rank, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
-    movRect.x = (rank*91+35)+21;
-    movRect.y = (file*91+35)+15;
-    return true;
+    int rank_diff = abs(prev_rank-rank);
+    int file_diff = abs(prev_file-file);
+    bool moved = false ;
+
+    if (rank_diff<=1 and file_diff<=1 and rank_diff+file_diff>=1){
+        movRect.x = (file*91+35)+off_centre_x;
+        movRect.y = (rank*91+35)+off_centre_y;
+        moved = true;
+    }
+    
+    return moved;
 
 }
 
@@ -118,6 +129,9 @@ bool King::move(int rank, int file, int prev_file, int prev_rank){
 King :: King(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type=type;
+    off_centre_x = 21;
+    off_centre_y = 15;
+
     if (piece_type==black_king){
         srcRect={75,7,54,54};
     }
@@ -127,17 +141,27 @@ King :: King(Allpieces type, SDL_Rect mover) {
 }
 
 
-bool Queen::move(int rank, int file, int prev_file, int prev_rank){
+bool Queen::move(int file, int rank, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
-    movRect.x = (rank*91+35)+15;
-    movRect.y = (file*91+35)+18;
-    return true;
+    int rank_diff = abs(prev_rank-rank);
+    int file_diff = abs(prev_file-file);
+    bool moved = false ;
+
+    if (rank_diff==0 or file_diff==0 or rank_diff==file_diff){
+        movRect.x = (file*91+35)+off_centre_x;
+        movRect.y = (rank*91+35)+off_centre_y;
+        moved = true;
+    }
+    
+    return moved;
 }
 
 Queen :: Queen(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type = type;
+    off_centre_x = 15;
+    off_centre_y = 18;
     if (piece_type==black_queen){
         srcRect= {276,7,60,54};
     }
@@ -147,17 +171,27 @@ Queen :: Queen(Allpieces type, SDL_Rect mover) {
 }
 
 
-bool Knight::move(int rank, int file, int prev_file, int prev_rank){
+bool Knight::move(int file, int rank, int prev_file, int prev_rank){
     //std::cout<<rank<<file<<"hre";
 
-    movRect.x = (rank*91+35)+19;
-    movRect.y = (file*91+35)+21;
-    return true;
+    int rank_diff = abs(prev_rank-rank);
+    int file_diff = abs(prev_file-file);
+    bool moved = false ;
+
+    if ((rank_diff==2 and file_diff==1)or (rank_diff==1 and file_diff==2)){
+        movRect.x = (file*91+35)+off_centre_x;
+        movRect.y = (rank*91+35)+off_centre_y;
+        moved = true;
+    }
+    
+    return moved;
 }
 
 Knight :: Knight(Allpieces type, SDL_Rect mover) {
     movRect = mover;
     piece_type = type;
+    off_centre_x = 19;
+    off_centre_y = 21;
     if (piece_type==black_knight){
         srcRect= {143,9,52,52}; 
     }
