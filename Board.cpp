@@ -1,6 +1,21 @@
 #include "Board.hpp"
 #include <vector>
 
+bool Board::isPathClear(int startRow, int startCol, int endRow, int endCol, int deltaRow, int deltaCol) const {
+
+    if (deltaCol==0 and deltaRow==0){
+        return true;
+    }
+    for (int i = startRow + deltaRow, j = startCol + deltaCol; i != endRow || j != endCol; i += deltaRow, j += deltaCol) {
+        if (blocks[i][j].piece) {
+            return false; // Path is not clear
+        }
+    }
+    return true; // Path is clear
+}
+
+
+
 position& Board::select(int x, int y){
 
     int file = (x-35)/91; 
@@ -9,20 +24,78 @@ position& Board::select(int x, int y){
     return blocks[rank][file];
 }
 
+
 void Board::move(int x, int y, int prev_x, int prev_y){
 
     int cur_file = (x-35)/91;
-    int cur_rank = (y-35)/91; // changed X to y here, hehe
+    int cur_rank = (y-35)/91; 
 
     int prev_file = (prev_x-35)/91;
     int prev_rank = (prev_y-35)/91; 
-    // std::cout<<cur_file<<" "<<cur_rank<<endl;
+    
+    int file_diff = cur_file-prev_file;
+    int rank_diff = cur_rank-prev_rank;
+    
+    int path_file = prev_file;
+    int path_rank = prev_rank;
 
-    if(blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank, prev_file, prev_rank)){
-        blocks[cur_rank][cur_file].piece=blocks[prev_rank][prev_file].piece;
-        blocks[prev_rank][prev_file].piece=nullptr;
+    int file_change=0;
+    int rank_change=0;
+
+    if (rank_diff == 0) {
+        file_change = (file_diff < 0) ? -1 : 1;
+    } 
+    else if (file_diff == 0) {
+        rank_change = (rank_diff < 0) ? -1 : 1;          
+    }    
+    else if ((abs(rank_diff) == abs(file_diff) and (not rank_diff==0 and not file_diff==0))) {
+        file_change = (file_diff < 0) ? -1 : 1;
+        rank_change = (rank_diff < 0) ? -1 : 1;
+    } 
+        
+
+    if (blocks[cur_rank][cur_file].piece){
+
+        if (isPathClear(prev_rank, prev_file, cur_rank, cur_file, rank_change, file_change)){
+            // if (blocks[prev_rank][prev_file].piece->piece_type==white_pawn
+            // and blocks[cur_rank][cur_file].piece->piece_type==black_pawn){
+
+            // }
+            // else if (blocks[cur_rank][cur_file].piece->piece_type==white_pawn
+            // and blocks[prev_rank][prev_file].piece->piece_type==black_pawn){
+
+            // }
+
+            if(blocks[prev_rank][prev_file].piece->move_possible(cur_file,cur_rank, prev_file, prev_rank)){
+                if(blocks[prev_rank][prev_file].piece->is_white() and (not blocks[cur_rank][cur_file].piece->is_white())){
+                blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank);
+                blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;
+                blocks[prev_rank][prev_file].piece = nullptr;
+                }
+            else if((not blocks[prev_rank][prev_file].piece->is_white()) and (blocks[cur_rank][cur_file].piece->is_white())){
+                blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank);
+                blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;
+                blocks[prev_rank][prev_file].piece = nullptr;
+                }
+            }
+        }
+        
+    }
+
+    else if(blocks[prev_rank][prev_file].piece->move_possible(cur_file,cur_rank, prev_file, prev_rank)){
+
+        if (isPathClear(prev_rank, prev_file, cur_rank, cur_file, rank_change, file_change)) {
+                blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank);
+                blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;
+                blocks[prev_rank][prev_file].piece = nullptr;
+            
+        } 
+        else {
+            std::cout << "There is a piece in the way, can't move.\n";
+        }
     }
 }
+
 
 
 void Board::setCoordinates(){
@@ -199,48 +272,3 @@ void Board::draw(){
 void Board::display(SDL_Rect& srcRect, SDL_Rect& movRect){
     SDL_RenderCopy(Board::gRenderer, Board::assets, &srcRect, &movRect);
 }
-
-// bool Board::move(int x, int y, int I, int J, int K){
-
-//     std::cout<<"Here";
-//     myPieces[K].movRect.x = blocks[4][4].x+35;
-//     myPieces[K].movRect.y=blocks[4][4].y+35;
-//     return false,-1,-1,-1;
-    // for(int i=0; i<8; i++){
-    //     for (int j=0; j<8; j++){
-    //         if (blocks[i][j].x<=x && blocks[i][j].x+91>=x && blocks[i][j].y<=y && blocks[i][j].y+91>=y && blocks[i][j].occupy==false){
-    //                 for (int k=0; k<myPieces.size(); k++){
-    //                     if(not((blocks[i][j].x<=myPieces[k].movRect.x && blocks[i][j].x+91>=myPieces[k].movRect.x) || (blocks[i][j].y<=myPieces[k].movRect.y && blocks[i][j].y+91>=myPieces[k].movRect.y))){
-    //                         myPieces[K].movRect.x=blocks[i][j].x+20;
-    //                         myPieces[K].movRect.y=blocks[i][j].y+20;
-    //                         return false,-1,-1,-1;
-    //                     }
-                        
-    //                 }
-    //         }
-    //         }
-    //     }
-    //     return true,I,J,K;
-// }
-
-
-
-
-
-
-    
-    // for(int i=0; i<8; i++){
-    //     for (int j=0; j<8; j++){
-    //         if (blocks[i][j].x<=x && blocks[i][j].x+91>=x && blocks[i][j].y<=y && blocks[i][j].y+91>=y && blocks[i][j].occupy==true){
-    //                 for (int k=0; k<myPieces.size(); k++){
-    //                     if(blocks[i][j].x<=myPieces[k].movRect.x && blocks[i][j].x+91>=myPieces[k].movRect.x && blocks[i][j].y<=myPieces[k].movRect.y && blocks[i][j].y+91>=myPieces[k].movRect.y ){
-    //                         // std:cout<<"Yayyy";
-    //                         return true,i,j,k;
-    //                     }   
-    //                 }
-    //             }
-    //         }
-    //     }
-    // return false,-1,-1,-1;
-    // }
-    

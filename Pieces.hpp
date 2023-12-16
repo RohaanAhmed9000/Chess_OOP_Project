@@ -18,14 +18,18 @@ enum Allpieces {
     white_knight
 };
 
+
 class Pieces 
 {
-
 public:
     Allpieces piece_type;
     SDL_Rect srcRect, movRect;
 
-    bool virtual move(int file, int rank, int prev_file, int prev_rank);
+    bool virtual move_possible(int file, int rank, int prev_file, int prev_rank);
+
+    void virtual move(int file, int rank);
+
+    bool is_white();
 protected:
     int off_centre_x, off_centre_y;
 

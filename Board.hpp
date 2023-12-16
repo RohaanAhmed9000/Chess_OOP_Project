@@ -36,6 +36,8 @@ class Board{
 
     position& select(int x, int y);
 
+    bool isPathClear(int startRow, int startCol, int endRow, int endCol, int deltaRow, int deltaCol) const;
+
 };
 
 
