@@ -57,21 +57,24 @@ void Board::move(int x, int y, int prev_x, int prev_y){
     if (blocks[cur_rank][cur_file].piece){
 
         if (isPathClear(prev_rank, prev_file, cur_rank, cur_file, rank_change, file_change)){
-            // if (blocks[prev_rank][prev_file].piece->piece_type==white_pawn
-            // and blocks[cur_rank][cur_file].piece->piece_type==black_pawn){
 
-            // }
-            // else if (blocks[cur_rank][cur_file].piece->piece_type==white_pawn
-            // and blocks[prev_rank][prev_file].piece->piece_type==black_pawn){
+            if ((blocks[prev_rank][prev_file].piece->piece_type==black_pawn) or (blocks[prev_rank][prev_file].piece->piece_type==white_pawn)){
+                if ((blocks[prev_rank][prev_file].piece->piece_type==black_pawn and blocks[cur_rank][cur_file].piece->is_white()) or (blocks[prev_rank][prev_file].piece->piece_type==white_pawn and not blocks[cur_rank][cur_file].piece->is_white())) 
+                {
+                    if (blocks[prev_rank][prev_file].piece->taking(cur_file,cur_rank, prev_file, prev_rank)){
+                        blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;
+                        blocks[prev_rank][prev_file].piece = nullptr;
+                    }
+                }
+            }
 
-            // }
-
-            if(blocks[prev_rank][prev_file].piece->move_possible(cur_file,cur_rank, prev_file, prev_rank)){
+            else if(blocks[prev_rank][prev_file].piece->move_possible(cur_file,cur_rank, prev_file, prev_rank)){
                 if(blocks[prev_rank][prev_file].piece->is_white() and (not blocks[cur_rank][cur_file].piece->is_white())){
                 blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank);
                 blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;
                 blocks[prev_rank][prev_file].piece = nullptr;
                 }
+
             else if((not blocks[prev_rank][prev_file].piece->is_white()) and (blocks[cur_rank][cur_file].piece->is_white())){
                 blocks[prev_rank][prev_file].piece->move(cur_file,cur_rank);
                 blocks[cur_rank][cur_file].piece = blocks[prev_rank][prev_file].piece;

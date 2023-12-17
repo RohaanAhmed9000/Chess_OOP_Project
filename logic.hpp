@@ -17,8 +17,7 @@ public:
     Pawn(Allpieces type, SDL_Rect mover);
     void move(int rank, int file) override;
     bool move_possible(int rank, int file, int prev_file, int prev_rank) override;
-
-    bool taking(int rank, int file, int prev_file, int prev_rank);
+    bool taking(int file, int rank, int prev_file, int prev_rank) override;
 };
 
 class Bishop: public Pieces 

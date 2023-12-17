@@ -9,6 +9,11 @@ bool Pieces::move_possible(int file, int rank, int prev_file, int prev_rank){
     return false;
 }
 
+bool Pieces::taking(int file, int rank, int prev_file, int prev_rank){
+    std::cout<<"takes takes takes, takes takes \n";
+    return false;
+}
+
 bool Pieces::is_white(){
     if(piece_type>5){
         return true;

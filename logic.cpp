@@ -28,16 +28,29 @@ void Pawn::move(int file, int rank){
     Pieces::move(file, rank);
 }
 
-bool Pawn::taking(int rank, int file, int prev_file, int prev_rank){
-    int rank_diff = abs(prev_rank-rank);
+bool Pawn::taking(int file, int rank, int prev_file, int prev_rank){
+    int rank_diff = prev_rank-rank;
     int file_diff = abs(prev_file-file);
     bool taken = false;
-    if (rank_diff==file_diff){
-        taken = true;
+    if (piece_type==black_pawn){
+        if((rank_diff==-1 /* or(rank_diff==-2 and first_move)*/) and file_diff==1){ //and file==prev_file){
+            Pieces::move(file, rank);
+            taken=true;
+            first_move=false;
+        }
+    }
+    else if (piece_type==white_pawn){
+        if((rank_diff==1 /*or (rank_diff==2 and first_move)*/) and file_diff==1){ //and file==prev_file){
+            Pieces::move(file, rank);
+            taken=true;
+            first_move=false;
+        }
     }
     return taken;
 
 }
+
+
 
 Pawn :: Pawn(Allpieces type, SDL_Rect mover) {
 

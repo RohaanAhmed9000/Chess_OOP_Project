@@ -29,6 +29,8 @@ public:
 
     void virtual move(int file, int rank);
 
+    bool virtual taking(int file, int rank, int prev_file, int prev_rank);
+
     bool is_white();
 protected:
     int off_centre_x, off_centre_y;
