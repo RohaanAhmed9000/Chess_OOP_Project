@@ -34,7 +34,7 @@ int  main(int argc, char *argv[])
     }
 
     game.transition();
-    game.close();
+    // game.close();
 
     return 0;
     

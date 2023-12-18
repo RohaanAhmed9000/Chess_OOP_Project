@@ -102,7 +102,6 @@ void Game::close()
 	// SDL_DestroyWindow(sWindow);
 	// sWindow = NULL;
 	// sRenderer = NULL;
-
 	// Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -127,7 +126,6 @@ SDL_Texture *Game::loadTexture(std::string path)
 		{
 			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
 		}
-
 		// Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
@@ -233,6 +231,8 @@ void Game::transition()
                         // code for main screen
                         loadMedia("background.png");
                         Game::run();
+						close();
+						return;
                         // string music;
                         // music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
                         // backgroundmusic = Mix_LoadWAV(music);
@@ -241,6 +241,7 @@ void Game::transition()
                         // code for exit
                         // std::cout<<'close';
                         close();  // this gives errors
+						return;
                     }
             }
 
