@@ -246,30 +246,23 @@ void Game::transition()
 
             SDL_RenderClear(gRenderer);
             // SDL_RenderClear(mRenderer);
-
             // removes everything from renderer
             // SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
             //***********************draw the objects here********************
             SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
             // SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
-
             // myBoard.assets = loadTexture("spritesheet.png");
             myBoard.gRenderer = gRenderer;
             // SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
             // drawBlocks(gRenderer, assets);
-
             assets = loadTexture("spritesheet.png");
-
             // movRect = {100, 100, 50, 50};
             // srcRect = {7, 8, 54, 53};
-
             myBoard.initialize();
 
             SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
-
             //****************************************************************
             SDL_RenderPresent(gRenderer);  // displays the updated renderer
-
             SDL_Delay(200);  // causes sdl engine to delay for specified miliseconds
         }
     }
