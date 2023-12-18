@@ -10,6 +10,7 @@ void getMouseClickCoordinates(int& x, int& y) {
 }
 int  main(int argc, char *argv[])
 {
+    string path = "menu.png";
     while (true) {
         if (GetAsyncKeyState(VK_LBUTTON) & 0x8001) {
             int x, y;
@@ -25,13 +26,14 @@ int  main(int argc, char *argv[])
         return 0;
     }
     // Load media
-    if (!game.loadMedia())
+
+    if (!game.loadMedia(path))
     {
         printf("Failed to load media!\n");
         return 0;
     }
 
-    game.run();
+    game.transition();
     game.close();
 
     return 0;

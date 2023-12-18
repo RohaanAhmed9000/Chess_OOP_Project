@@ -44,10 +44,11 @@ public:
     Board myBoard;
 
     bool init();
-    bool loadMedia();
+    bool loadMedia(string path="menu.png");
     void close();
     SDL_Texture *loadTexture(std::string path);
     void run();
+    void transition();
 };
 
 // class DraWpieces

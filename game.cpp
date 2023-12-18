@@ -69,13 +69,13 @@ bool Game::init()
 	return success;
 }
 
-bool Game::loadMedia()
+bool Game::loadMedia(string path)
 {
 	// Loading success flag
 	bool success = true;
 
 	// assets = loadTexture("assets.png");
-	gTexture = loadTexture("background.png");
+	gTexture = loadTexture(path);
 	//sTexture = loadTexture ("menu.png");
 	if ( gTexture == NULL  )
 	{
@@ -134,6 +134,9 @@ SDL_Texture *Game::loadTexture(std::string path)
 
 	return newTexture;
 }
+
+
+
 void Game::run()
 {
 	bool quit = false;
@@ -158,34 +161,22 @@ void Game::run()
 
 			if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
-				// this is a good location to add pigeon in linked list.
-				// int xMouse=1000, yMouse=1000;
-				//std::cout<<xMouse<<yMouse;
 				SDL_GetMouseState(&xMouse, &yMouse);
-				//std::cout<<xMouse<<yMouse;
-				if (click==1){
-					myBoard.move(xMouse, yMouse, cur_pos->x, cur_pos->y);
+	
+				if (click==1){ //there was a piece selected on the last move
+					myBoard.move(xMouse, yMouse, cur_pos->x, cur_pos->y); //movement and interaction of the pieces
 					cur_pos=nullptr;
 					click=0;
-					// std::cout<<"value of click: "<<cur_pos<<std::endl;
-					// took me more than an hour to debug this, I literally tried everything!!, we can also change the order of the IF conditions
 					break;
 				}
 
-				// changed the condition and the operator for OR and AND	
 				if (!(xMouse>760 || yMouse>760 || xMouse<35 || yMouse<35) && click==0){
-					//std::cout<<"sahi jai bhai";
 
-					cur_pos = &(myBoard.select(xMouse,yMouse));
-					// std::cout<<cur_poss->x<<" "<<cur_pos->y<<endl;
-					if (cur_pos->piece){
-						// std::cout<<"piece selected\n";
+					cur_pos = &(myBoard.select(xMouse,yMouse)); // selecting a piece
+					if (cur_pos->piece){ //checking if there is a piece on the selected square
 						click=1;
 					}
 				}
-
-				
-				// std::cout<<xMouse<<" "<<yMouse<<endl;
 			}
 		}
 
@@ -195,11 +186,6 @@ void Game::run()
     
 		static int count=0;
 
-		// to check whether a piece is selected
-		// bool slct= false;
-
-		// int I=-1,J=-1,K=-1;
-		
     	if (count==0){
 			myBoard.assets = loadTexture("spritesheet.png");
 			myBoard.gRenderer = gRenderer;
@@ -207,16 +193,6 @@ void Game::run()
 			myBoard.setCoordinates();
 			count++;
 		}
-
-		//static int cur_rank, cur_file = 0;
-
-		// std::cout<<xMouse<<" "<<yMouse<<endl;
-		//if ((xMouse>=35 and xMouse<=762) and (yMouse>=35 and yMouse<=762)){
-			// 
-			// Pieces* cur_piece = myBoard.blocks[cur_rank][cur_file].piece;
-			// click = 1;
-			// std::cout<<cur_rank<<" "<<cur_file<<endl;
-		//}
 		
         myBoard.draw();
 
@@ -229,93 +205,72 @@ void Game::run()
 	}
 }
 
+void Game::transition()
+{
+    string path = "menu.png";
+    string music;
+    // music = "E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u/board.mp3";
+    // Mix_PlayMusic(music, -1);
+    // game.close();
+    bool quit = false;
+    SDL_Event e;
+    // initial();
 
+    while (!quit) {
+        // Handle events on queue
+        while (SDL_PollEvent(&e) != 0) {
+            // User requests quit
+            if (e.type == SDL_QUIT) {
+                quit = true;
+            }
 
+            if (e.type == SDL_MOUSEBUTTONDOWN) {
+                int xMouse, yMouse;
 
+                SDL_GetMouseState(&xMouse, &yMouse);
+                if ((xMouse >= 154 && xMouse <= 346) && (yMouse >= 331 && yMouse <= 365))  // for start
+                    {
+                        // code for main screen
+                        loadMedia("background.png");
+                        Game::run();
+                        // string music;
+                        // music = "E:\SEM 3\OOP\oop project\Chess_OOP_Project-u\Chess_OOP_Project-u\board.mp3";
+                        // backgroundmusic = Mix_LoadWAV(music);
+                    }
+                    else if ((xMouse >= 466 && xMouse <= 658) && (yMouse >= 331 && yMouse <= 366)) {
+                        // code for exit
+                        // std::cout<<'close';
+                        close();  // this gives errors
+                    }
+            }
 
+            SDL_RenderClear(gRenderer);
+            // SDL_RenderClear(mRenderer);
 
-// void initial()
-// {
-//     for (int i=0; i<rows ; i++ )
-//     {
-//         for (int j=0; j< cols ; j++)
-//         {
-//             if (i==1 || i==0)
-//             {
-//                 if(i==1){
-//                     grid[i][j]='P';
-//                 }
-//                 else{
-//                     switch(j)
-//                     {
-//                         case 0:grid[i][j]='R'; break;
-//                         case 1:grid[i][j]='N'; break;
-//                         case 2:grid[i][j]='B'; break;
-//                         case 3:grid[i][j]='Q'; break;
-//                         case 4:grid[i][j]='K'; break;
-//                         case 5:grid[i][j]='B'; break;
-//                         case 6:grid[i][j]='N'; break;
-//                         case 7:grid[i][j]='R'; break;
-//                     }
-                
-//                 }
-//             }
-//             else if(i==6 || i==7)
-//             {
-//                 if(i==6){
-//                     grid[i][j]='p';
-//                 }
-//                 else{
-//                     switch(j){
-//                         case 0:grid[i][j]='r'; break;
-//                         case 1:grid[i][j]='n'; break;
-//                         case 2:grid[i][j]='b'; break;
-//                         case 3:grid[i][j]='q'; break;
-//                         case 4:grid[i][j]='k'; break;
-//                         case 5:grid[i][j]='b'; break;
-//                         case 6:grid[i][j]='n'; break;
-//                         case 7:grid[i][j]='r'; break;
-//                     }    
-//                 }
-//             }
-//         }
-//     }
-// }
+            // removes everything from renderer
+            // SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);//Draws background to renderer
+            //***********************draw the objects here********************
+            SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+            // SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
 
-// void drawOneBlock(SDL_Renderer* renderer, SDL_Texture* texture, int row, int col, char sym)
-// {
-//     int xbox = 800/cols;
-//     int ybox = 800/rows;
-//     SDL_Rect src;
-//     switch(sym){
-//     // BLACK IS CAPITAL YANI UPPER CASE !
-//         case 'P': src = {219, 12, 38, 49}; break; // pawn
-//         case 'B': src = {7, 8, 54, 53}; break;  // bishop
-//         case 'K': src = {75, 7, 54, 54}; break;
-//         case 'Q': src = {276, 7, 60, 56}; break; // 54
-//         case 'R': src = {352, 12, 44, 49}; break;
-//         case 'N': src = {143, 9, 52, 52}; break; // knight
-//         // white
-//         case 'p': src = {627, 12, 38, 49}; break;
-//         case 'b': src = {415, 8, 54, 53}; break;
-//         case 'k': src = {483, 7, 54, 54}; break;
-//         case 'q': src = {684, 7, 60, 54}; break;
-//         case 'r': src = {760, 12, 44, 49}; break;
-//         case 'n': src = {551, 9, 52, 52}; break;
-//     }
-//     SDL_Rect mov = { xbox*col, ybox*row, xbox - 10, ybox - 10};
-//     SDL_RenderCopy(renderer, texture, &src, &mov);
+            // myBoard.assets = loadTexture("spritesheet.png");
+            myBoard.gRenderer = gRenderer;
+            // SDL_RenderCopy(sRenderer, sTexture, NULL, NULL);
+            // drawBlocks(gRenderer, assets);
 
-// }
+            assets = loadTexture("spritesheet.png");
 
-// void drawBlocks(SDL_Renderer* renderer, SDL_Texture* texture){
-//     // Call drawOneBlock for all of the blocks of grid
-//     // for example to draw a snake over block (3, 5) you call it this way:
-//     // drawOneBlock(renderer, texture, 3, 5, 'S');
-//     if(grid == NULL) return;
-//     for(int i=0;i<rows; i++){
-//         for(int j=0;j<cols; j++){
-//             drawOneBlock(renderer, texture, i, j, grid[i][j]);
-//         }   
-//     }
-// }
+            // movRect = {100, 100, 50, 50};
+            // srcRect = {7, 8, 54, 53};
+
+            myBoard.initialize();
+
+            SDL_RenderCopy(gRenderer, assets, &srcRect, &movRect);
+
+            //****************************************************************
+            SDL_RenderPresent(gRenderer);  // displays the updated renderer
+
+            SDL_Delay(200);  // causes sdl engine to delay for specified miliseconds
+        }
+    }
+}
