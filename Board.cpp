@@ -6,6 +6,7 @@ bool Board::isPathClear(int startRow, int startCol, int endRow, int endCol, int 
     if (deltaCol==0 and deltaRow==0){
         return true;
     }
+
     for (int i = startRow + deltaRow, j = startCol + deltaCol; i != endRow || j != endCol; i += deltaRow, j += deltaCol) {
         if (blocks[i][j].piece) {
             return false; // Path is not clear
@@ -58,7 +59,34 @@ void Board::move(int x, int y, int prev_x, int prev_y){
 
         if (isPathClear(prev_rank, prev_file, cur_rank, cur_file, rank_change, file_change)){
 
-            if ((blocks[prev_rank][prev_file].piece->piece_type==black_pawn) or (blocks[prev_rank][prev_file].piece->piece_type==white_pawn)){
+            if ((blocks[prev_rank][prev_file].piece->piece_type==black_king && blocks[cur_rank][cur_file].piece->piece_type==black_rook) || (blocks[prev_rank][prev_file].piece->piece_type==white_king && blocks[cur_rank][cur_file].piece->piece_type==white_rook)){
+                if (cur_file==0){
+                    // blocks[prev_rank][prev_file].piece->first_move=false;
+                    // blocks[cur_rank][cur_file].piece->first_move=false;
+                    blocks[prev_rank][prev_file].piece->move(2, prev_rank);
+                    blocks[prev_rank][2].piece = blocks[prev_rank][prev_file].piece;
+
+                    blocks[cur_rank][cur_file].piece->move(3, cur_rank);
+                    blocks[cur_rank][3].piece = blocks[cur_rank][cur_file].piece;
+
+                    blocks[cur_rank][cur_file].piece = nullptr;
+                    blocks[prev_rank][prev_file].piece = nullptr;
+                }
+                else{
+                    // blocks[prev_rank][prev_file].piece->first_move=false;
+                    // blocks[cur_rank][cur_file].piece->first_move=false;
+                    blocks[prev_rank][prev_file].piece->move(6,prev_rank);
+                    blocks[prev_rank][6].piece = blocks[prev_rank][prev_file].piece;
+                    
+
+                    blocks[cur_rank][cur_file].piece->move(5,cur_rank);
+                    blocks[cur_rank][5].piece = blocks[cur_rank][cur_file].piece;
+
+                    blocks[prev_rank][prev_file].piece = nullptr;
+                    blocks[cur_rank][cur_file].piece = nullptr;
+                }
+            }
+            else if ((blocks[prev_rank][prev_file].piece->piece_type==black_pawn) or (blocks[prev_rank][prev_file].piece->piece_type==white_pawn)){
                 if ((blocks[prev_rank][prev_file].piece->piece_type==black_pawn and blocks[cur_rank][cur_file].piece->is_white()) or (blocks[prev_rank][prev_file].piece->piece_type==white_pawn and not blocks[cur_rank][cur_file].piece->is_white())) 
                 {
                     if (blocks[prev_rank][prev_file].piece->taking(cur_file,cur_rank, prev_file, prev_rank)){

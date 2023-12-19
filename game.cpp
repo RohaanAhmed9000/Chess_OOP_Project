@@ -4,7 +4,8 @@
 // // #include "GhostBuster.hpp"
 // #include "Board.hpp"
 
-
+#include <SDL_mixer.h>
+Mix_Chunk* backgroundmusic = NULL;
 char ** grid = NULL;
 int rows=8;
 int cols=8;
@@ -76,6 +77,18 @@ bool Game::loadMedia(string path)
 
 	// assets = loadTexture("assets.png");
 	gTexture = loadTexture(path);
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+		// Handle audio initialization error
+		cout << "SDL Mixer could not initialize! Error befire MUSICCCC: " << Mix_GetError() << endl;
+	}
+	Mix_Music* music = Mix_LoadMUS( "E:/SEM 3/OOP/oop project/OOP Project/OOP Project/Chess_OOP_Project/menu2.mp3");
+	if (!music) {
+		// Handle music loading error
+		cout << "Music Loading errror" << Mix_GetError();
+	}
+
+	Mix_PlayMusic(music,0);
 	//sTexture = loadTexture ("menu.png");
 	if ( gTexture == NULL  )
 	{
@@ -206,7 +219,7 @@ void Game::run()
 void Game::transition()
 {
     string path = "menu.png";
-    string music;
+    //string music;
     // music = "E:/SEM 3/OOP/oop project/Chess_OOP_Project-u/Chess_OOP_Project-u/board.mp3";
     // Mix_PlayMusic(music, -1);
     // game.close();
@@ -228,8 +241,31 @@ void Game::transition()
                 SDL_GetMouseState(&xMouse, &yMouse);
                 if ((xMouse >= 154 && xMouse <= 346) && (yMouse >= 331 && yMouse <= 365))  // for start
                     {
+						if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+						 {
+    						// Handle audio initialization error
+    						cout << "SDL Mixer could not initialize! Error befire SCreenn: " << Mix_GetError() << endl;
+						}						
+
                         // code for main screen
                         loadMedia("background.png");
+						/*
+						"E:\SEM 3\OOP\oop project\OOP Project\OOP Project\Chess_OOP_Project\song.mp3"
+						*/
+						if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+						 {
+    						// Handle audio initialization error
+    						cout << "SDL Mixer could not initialize! Error befire MUSICCCC: " << Mix_GetError() << endl;
+						}
+						Mix_Music* music = Mix_LoadMUS( "E:/SEM 3/OOP/oop project/OOP Project/OOP Project/Chess_OOP_Project/song.mp3");
+						if (!music) {
+							// Handle music loading error
+							cout << "Music Loading errror" << Mix_GetError();
+						}
+
+						Mix_PlayMusic(music,-1);
+
+
                         Game::run();
 						close();
 						return;

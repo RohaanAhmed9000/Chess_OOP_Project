@@ -43,15 +43,18 @@ class Rook: public Pieces // 99% inheritence public
 {
     public: 
     Rook(Allpieces type, SDL_Rect mover);
+    bool first_move=true;
 
     void move(int rank, int file) override;
     bool move_possible(int rank, int file, int prev_file, int prev_rank) override;
+    
 };
 
 class King: public Pieces 
 {
     public:
     King(Allpieces type, SDL_Rect mover);
+    bool first_move=true;
 
     void move(int rank, int file) override;
     bool move_possible(int rank, int file, int prev_file, int prev_rank) override;

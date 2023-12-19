@@ -105,6 +105,7 @@ bool Rook::move_possible(int file, int rank, int prev_file, int prev_rank){
     bool moved = false ;
     if (rank_diff==0 or file_diff==0){
         moved = true;
+        first_move = false;
     }
     return moved;
 }
@@ -134,6 +135,7 @@ bool King::move_possible(int file, int rank, int prev_file, int prev_rank){
     bool moved = false ;
     if (rank_diff<=1 and file_diff<=1 and rank_diff+file_diff>=1){
         moved = true;
+        first_move = false;
     }
     return moved;
 }
